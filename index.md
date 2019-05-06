@@ -15,7 +15,7 @@ order: 1
 
 ### Outline
 
-- [Session 0](/session0.html): Getting started with Flask
+- [Session 0](session0.html): Getting started with Flask
 
 ### Contact
 
