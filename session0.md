@@ -84,13 +84,32 @@ Avec votre navigateur web, tapez l'[URL](https://fr.wikipedia.org/wiki/Uniform_R
 
 ## II- Démarrer avec le projet exemple depuis Github
 
+Nous allons maintenant récupérer un exemple de projet Flask
+fonctionnel, qui met en oeuvre les éléments qui seront introduits au
+cours des prochaines séances. Ce projet est hébergé sur la plateforme
+d'hébergement de code source [Github](https://github.com). Nous vous
+conseillons vivement de vous faire un compte sur Github, et de
+l'utiliser pour héberger vos futurs projets de développement
+logiciels.
+
 ### A- Récupération du code depuis Github
+
+Le projet d'exemple est hébergé dans le dépot suivant:
+
+[https://github.com/badock/FlaskSar2019ExampleApp](https://github.com/badock/FlaskSar2019ExampleApp)
+
+Vous allez créer un nouveau projet PyCharm se basant sur le code
+hébergé dans le dépot précédent:
+
+![capture d'écran montrant comment récupérer le projet exemple sur Github](/assets/img/session0/screen15.png)
+
+![capture d'écran montrant comment récupérer le projet exemple sur Github](/assets/img/session0/screen16.png)
+
+![capture d'écran montrant comment installer les dépendances logicielles](/assets/img/session0/screen17.png)
 
 ### B- Lancement du projet et configuration du mode _deboggage_
 
-```bash
-git clone https://github.com/badock/flask_sar_2018.git
-```
+![capture d'écran montrant comment installer les dépendances logicielles](/assets/img/session0/screen18.png)
 
 ## Next step : implementing a view
 
