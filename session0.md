@@ -1,5 +1,5 @@
 ---
-title: Session 0 - Getting Started with Flask
+title: Session 0 - Démarrer avec Flask et Python
 excerpt: ""
 order: 1
 ---
