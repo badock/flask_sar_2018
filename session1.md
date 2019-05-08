@@ -6,6 +6,9 @@ order: 1
 
 # Session 1 - Démarrer avec Flask et Python
 
+1. TOC
+{:toc}
+
 Cette session part du principe que vous avez fait la [session
 0](session0.html) : avant de démarrer cette session, assurez vous de
 bien avoir un environnement de développement Flask fonctionnel. Si ce
@@ -21,7 +24,7 @@ Nous allons voir dans cette Section comment afficher un message dans le navigate
 * Créer un nouveau projet Flask qui aura pour nom "FlaskTP1"
 * Coder une vue qui affichera le texte "Helloworld" quand l'utilisateur accèdera à l'URL [http://127.0.0.1:5000/greetings](http://127.0.0.1:5000/greetings)
 
-Pour cela, éditez le fichier app.py généré par PyCharm de manière à ce qu'il contienne le code suivant:
+Pour cela, éditez le fichier `app.py` généré par PyCharm de manière à ce qu'il contienne le code suivant:
 
 ```python
 @app.route('/greetings')
@@ -75,7 +78,7 @@ Nous pouvons faire les observations suivantes:
 * La coloration synthaxique ne fonctionne pas pour le code HTML.
 * Le mélange python et HTML est peu lisible
 * Si notre application contient plusieurs fonctions suivant ce style
-  de programmation, le fichier **app.py** deviendra rapidement très
+  de programmation, le fichier `app.py` deviendra rapidement très
   gros.
   
 Une autre approche plus acceptable consiste à mettre le code HTML dans
@@ -89,7 +92,7 @@ Flask utilise le moteur de template Jinja2
 Nous allons maintenant voir comment utiliser les templates pour
 générer des réponses utilisant du code HTML. Pour cela:
 
-* 1) créer un fichier *first_template.html* dans le dossier templates
+* 1) créer un fichier `first_template.html` dans le dossier templates
    (en violet dans PyCharm)
 * 2) y mettre le contenu suivant:
 
@@ -103,7 +106,7 @@ générer des réponses utilisant du code HTML. Pour cela:
     </body>
 </html>
 ```
-- 3) créer une nouvelle fonction python dans le fichier **app.py**, qui reprendrait le code suivant:
+- 3) créer une nouvelle fonction python dans le fichier `app.py`, qui reprendrait le code suivant:
 
 ```python
 import flask # mettre cette ligne au debut de votre fichier Python
@@ -135,12 +138,12 @@ l'utilisateur.
 
 **L'objectif sera maintenant de prendre en compte des variables Python
 la génération de la réponse. Nous verrons nottament comment faire une
-boucle avec l'instruction _for_ et comment faire une structure
-conditionnelle avec l'instruction _if/else_**
+boucle avec l'instruction `for` et comment faire une structure
+conditionnelle avec l'instruction `if/else`**
 
 Pour cela, nous allons:
 
-- 1) modifier la fonction *some_function_html_with_template* afin qu'elle contienne le code suivant:
+- 1) modifier la fonction `some_function_html_with_template` afin qu'elle contienne le code suivant:
 
 ```python
 colors = ["red", "blue", "green", "purple", "dark", "white"]
@@ -149,7 +152,7 @@ msg_if_boolean_value = "[boolean_value is true]"
 msg_if_not_boolean_value = "[boolean_value is false]"
 ```
 
-- 2) modifier l'appel à la fonction *render_template* afin qu'elle prenne en compte la varible de date:
+- 2) modifier l'appel à la fonction `render_template` afin qu'elle crée un contexte jinja2 qui contienne les variables Python précédemment crées:
 
 ```python
 return render_template("first_template.html",
@@ -159,7 +162,7 @@ return render_template("first_template.html",
                        msg_if_not_boolean_value_arg=msg_if_not_boolean_value)
 ```
 
-- 3) Modifier la template **templates/first_template.html** de manière à ce qu'elle affiche la valeur de la date:
+- 3) Modifier la template `templates/first_template.html` de manière à ce qu'elle affiche les variables passées à la fonction `render_template`:
 
 ```jinja
 {% raw %}
@@ -190,15 +193,10 @@ En visitant la page [http://127.0.0.1:5000/greetings_with_html_and_template](htt
 On peut voir que les valeurs des variables Python sont bien prises en
 compte pour former la réponse HTML : la réponse HTML sera adaptée au
 contenu des variables Python. De plus des structures de contrôle
-telles que les **if/else** et les **for/while** permettent de
+telles que les `if/else` et les `for/while` permettent de
 structure le code Jinja2.
 
-## III- Récupérer de l'information de l'utilisateur
-
-Dans cette Section nous verrons comment récupérer de l'information de
-l'utilisateur.
-
-### Par URL
+## III- Passer de l'information dans l'URL
 
 Il est possible de récupérer des informations contenues dans l'URL que
 l'utilisateur accède. Le code suivant définie une fonction qui prend 3
@@ -217,9 +215,6 @@ résultat suivant:
 
 ![capture d'écran montrant le programme d'installation de miniconda](/assets/img/session1/screen5.png)
 
-### Par formulaire
+## IV- Prochaine session
 
-
-## Next step : implementing a view
-
-Congratulations! You can now proceed with the [next session](/session1)
+Demander de l'information avec les formulaires: [next session](session2.html)

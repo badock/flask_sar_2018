@@ -13,3 +13,6 @@ plugins:
 - jekyll-feed
 - jemoji
 
+# Enable or disable the site search
+search_enabled: true
+

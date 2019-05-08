@@ -6,6 +6,9 @@ order: 1
 
 # Session 0 - Démarrer avec Flask et Python
 
+1. TOC
+{:toc}
+
 Dans le cas où vous ne disposiez pas déjà d'un environnement de
 développement Python, nous en installerons un dans cette session en utilisant le logiciel
 [*miniconda*](https://docs.conda.io/en/latest/miniconda.html) pour
@@ -29,8 +32,9 @@ Vous pouvez le programme d'installation : Miniconda est maintenant installé sur
 
 **Si l'installation n'a pas fonctionné correctement ou des messages d'erreur sont apparus, parlez-en à un des enseignants afin de ne pas prendre de retard sur la session.**
 
+### B- Installation de Git
 
-### B- Installation et configuration de PyCharm
+### C- Installation et configuration de PyCharm
 
 
 #### 1. Installation de PyCharm
