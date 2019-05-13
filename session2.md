@@ -11,28 +11,68 @@ order: 1
 
 ## I- Rappels sur les formulaires
 
-## II- Mise en place d'un formulaire pour editer des posts
+Les formulaires sont une manière de demander de l'information aux
+utilisateurs. Ils fonctionnent de la même manière que les formulaires
+administratifs:
 
-### a) Récupération d'un code existant
+| Étape | Formulaire administratif | Formulaire Flask             |
+|:--: |:------------------------------------|:------------------|
+| `Développement`{: .label .label-blue} | | |
+| 0 | Définition d'un formulaire (avec Word)  | Définition d'une classe héritant de `flask_wtf.Form` et d'une vue qui génère un formulaire HTML |
+| `Fonctionnement`{: .label .label-blue} | | |
+| 1 | Un utilisateur prend contact à un guichet | Un utilisateur accède à une vue Flask via un navigateur web  |
+| 2 | L'agent administratif demande à l'utilisateur ce qu'il veut | Flask route la requête à la bonne fonction Python |
+| 3 | L'agent imprime un nouveau formulaire  correspondant à la demande         | Flask génère un formulaire HTML grâce à la template, et utilise l'état de avec l'objet héritant de `flask_wtf.Form` pour pré-remplir les champs |
+| 4 | L'agent donne le formulaire à l'utilisateur | Flask retourne le formulaire HMTL à l'utilisateur  |
+| 5 | **L'utilisateur remplit le formulaire** | **L’utilisateur remplit le formulaire** |
+| 6 | L'utilisateur donne le formulaire à l'agent | L'utilisateur clique sur le bouton `submit` |
+| 7 | L'agent vérifie les information du formualire le formulaire | La fonction `form.validate_on_submit()` vérifie les informations du formulaire |
+| `Si le formulaire est bien rempli`{: .label .label-green} | | |
+| 8 | L'agent accepte le formulaire et prend en compte la demande | Flask accepte le formulaire et fait des modifications en base de données |
+| `Si le formulaire est mal rempli`{: .label .label-red} | | |
+| 9 | Retour à l'étape 5 | Retour à l'étape 3 (en sauvegardant les informations entrées par l'utilisateur dans l'objet héritant `flask_wtf.Form`) | 
+
+De manière générale, pour implémenter correctement un formulaire avec
+Flask nous écrirons 3 fonction python:
+* une fonction `create_or_process_form` qui sera en charge de récupérer une requête HTTP et de faire appel à une des deux fonctions suivantes.
+* une fonction `display_form_post` qui affiche le formulaire:
+  * vide lors du premier essaie de remplissage
+  * pré-remplit lors des essais supplémentaires
+* une fonction `do_something` qui
+  * traite les champs du formulaire préalablement validé
+  * redirige l'utilisateur une fois le traitement fait
+
+
+et un object `form` héritant de la classe `flask_wtf.Form`, qui va
+définir les champs du formulaires, leurs contraintes, et qui à terme
+contiendra les états persistants de ces champs (.i.e pour lors de
+plusieurs essais, les utilisateurs n'aient pas à re-saisir les champs
+déjà saisis).
+
+L'image ci-dessus résume le fonctionnement du formulaire avec la convention précédemment décrite:
+![capture d'écran montrant l'architecture d'un formulaire](/assets/img/session2/schema.png)
+
+## II- Un formulaire pour calculer une addition
+
+## III- Étude d'un formulaire fonctionnel pour editer des posts
 
 Depuis PyCharm, récupérez le contenu de la branche
 **TP1_formulaires**, en suivant les [instructions
 suivantes](git.html#r%C3%A9cup%C3%A9rer-le-code-dune-branche-git-avec-pycharm).
 
-### b) ajout du formulaire
-
-Vous venez de récupérer un projet complet qui servira de base pour
-expliquer les éléments introduits lors des prochaines sessions. Il
-affiche des posts écrits par des auteurs, le tout stocké dans une base
-de données simple.
-
-**La seule chose qui manque à ce projet est un formulaire pour créer
-ou éditer un post. Nous allons voir maintenant comment mettre en place
-ce formulaire.**
+Le projet que vous venez de récupérer est un projet Flask complet qui
+servira de base pour expliquer les éléments introduits lors des
+prochaines sessions. Il affiche des posts écrits par des auteurs, le
+tout stocké dans une base de données simple.
 
 Dans cet exemple d'application, un post contient 3 données:
 1. un titre _sous forme de texte_
 2. un contenu _sous forme de texte_
+
+**Nous allons maintenant voir comment fonctionne le formulaire pour
+créer ou éditer un post.**
+
+### A) Définition du modèle pour le formulaire
 
 Dans le fichier `sar2019/forms.py`, nous allons créer une classe
 `PostEditForm` qui contiendra une description "logique" de notre
@@ -57,17 +97,37 @@ Nous pouvons faire les observations suivantes:
   texte, qui sont vérifiés à la soumission du formulaire : ici, il
   s'agira de vérifier que les valeurs envoyées ne sont pas vides.
 
-Nous allons maintenant créer un objet `PostEditForm` dans la fonction
-`create_or_process_post`, en lui passant:
+Dans la fonction `create_or_process_post`, nous allons maintenant
+créer un objet de type `PostEditForm` en lui passant:
 * une représentation d'un post en base de données si on édite un post
 * `None` si on crée un nouveau post
 
+### B) Ajouter les vues du formulaire
+
 ```python
-post = database.models.Post.query.filter_by(id=post_id).first()
-    
-from sar2019.forms import PostEditForm
-form = PostEditForm(obj=post)
+@app.route("/posts/edit/", methods=["GET", "POST"])
+@app.route("/posts/edit/<post_id>", methods=["GET", "POST"])
+def create_or_process_post(post_id=None):
+
+    # Fetch the corresponding post from the database. If no ID is provided,
+    # then post will be 'None', and the form will consider this value
+    # as a sign that a new post should be created
+    post = database.models.Post.query.filter_by(id=post_id).first()
+
+    from sar2019.forms import PostEditForm
+    form = PostEditForm(obj=post)
+
+    # 'validate_on_submit' returns False if:
+    #   * the form has not been submit yet 
+    #   * at least one field is incorrect
+    if form.validate_on_submit():
+        return save_post_and_redirect_to_homepage(post, form)
+    else:
+        return display_post_form(post, form)
 ```
+
+La fonction `display_post_form` passe le formulaire `form` et le post
+existant `post` à une template Jinja2 et retourne le résultat généré:
 
 ```python
 def display_post_form(post, form):
@@ -75,6 +135,12 @@ def display_post_form(post, form):
                                  form=form,
                                  post=post)
 ```
+
+La template jinja2 `edit_post_form.html.jinja2` génère un formulaire,
+dont le résultat sera envoyé à la fonction `create_or_process_post` en
+utilsant la méthode `POST` du protocole HTTP. Les champs sont affichés
+en utilisant la macro (fonction Jinja) fournie dans le fichier
+`templates/forms.html.jinja2`:
 
 {% raw %}
 ```jinja
@@ -94,16 +160,29 @@ def display_post_form(post, form):
 ```
 {% endraw %}
 
+Lors de la validation du formulaire deux cas se présente: selon le résultat de l'expression `if form.validate_on_submit():`:
+1. Les informations du formulaire sont incorrectes, il faut que l'utilisateur recommence. Dans ce cas la fonction `create_or_process_post` renvoie le formulaire grâce à la fonction `display_post_form`
+2. Les informations du formulaire sont correctes et la fonction `save_post_and_redirect_to_homepage` est appelée : les valeurs entrées dans les champs sont prises en compte en modifiant la base de données, et l'utilisateur est redirigé sur la vue de la méthode `index`
+
+Le bloc de code suivant montre comment `save_post_and_redirect_to_homepage` est codée:
+
 ```python
 def save_post_and_redirect_to_homepage(post, form):
+    # Si 'post' vaut None, alors on est dans le cas
+    # d'une nouvelle publication : il faut le créer
     if post is None:
         post = database.models.Post()
         post.user_id = 1
+    
+    # On modifie les attributs du post
     post.title = form.title.data
     post.content = form.content.data
+    
+    # On pousse les modifications sur la base de données
     db.session.add(post)
     db.session.commit()
 
+    # On redirige l'utilisateur sur la page d'accueil
     return flask.redirect(flask.url_for('index'))
 ```
 

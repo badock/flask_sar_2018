@@ -53,7 +53,7 @@ difficilement HTML et Python. Nous verrons ensuite comment simplifier
 cette cohabitation en utilisant des fichiers **Templates** basés sur
 le moteur [Jinja2](http://jinja.pocoo.org/docs/2.10/).
 
-### c) Retourner du HTML brut : une mauvaise idée
+### a) Retourner du HTML brut : une mauvaise idée
 
 Nous pouvons faire une nouvelle vue, similaire à celle codée dans la
 Section précédente, mais qui cette fois retournera une chaine de
