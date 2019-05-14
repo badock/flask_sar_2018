@@ -52,7 +52,191 @@ déjà saisis).
 L'image ci-dessus résume le fonctionnement du formulaire avec la convention précédemment décrite:
 ![capture d'écran montrant l'architecture d'un formulaire](/assets/img/session2/schema.png)
 
-## II- Un formulaire pour calculer une addition
+## II- Un formulaire pour calculer des expressions mathématiques
+
+Dans cette section nous allons coder un formulaire qui permettra de
+calculer des expressions mathématiques avec un formulaire. Le
+formulaire ressemblera à cela:
+
+![capture d'écran d'un formulaire pour calculer des expressions mathématiques](assets/img/session2/form_math_1.png)
+
+En validant le formulaire figurant dans l'image précédente,
+l'expression mathématique correspodant sera calculée, et le résultat
+de son évaluation sera affiché comme suit:
+
+![capture d'écran du résultat de l'évaluation d'une expression mathématiques](assets/img/session2/form_math_2.png)
+
+
+### a- Récupération du projet à compléter
+
+Depuis PyCharm, récupérez le contenu de la branche
+**formulaires**, en suivant les [instructions
+suivantes](git.html#r%C3%A9cup%C3%A9rer-le-code-dune-branche-git-avec-pycharm).
+
+Ce projet une application Flask basique qu'il faudra compléter.
+
+__Ce projet fournit un fichier `templates/forms.html.jinja2` contenant
+une macro (fonction) Jinja2 `render_field`, simplifiant l'affichage
+des champs d'un formulaire__, ce qui sera pratique pour les sessions
+suivantes:
+
+{% raw %}
+``` jinja
+{% macro render_field(field) %}
+    <dl>
+        <dt>{{ field.label }}</dt>
+        <dd>{{ field(**kwargs)|safe }}
+            {% if field.errors %}
+                <ul class=errors>
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </dd>
+    </dl>
+{% endmacro %}
+```
+{% endraw %}
+
+Cette macro prend en entrée un attribut champ d'un objet formulaire
+héritant de `flask_wtf.Form`, et se charge d'afficher:
+* l'étiquette (label) du formulaire
+* le code HTML pour afficher le formulaire
+* le code HTML pour afficher d'éventuels messages d'erreurs lors de la
+  validation du formulaire
+
+### b- Définition de la représentation logique d'un formulaire
+
+Tout d'abord, ajoutons au fichier `sar2019/forms.py` une
+réprésentation logique de notre Fomulaire:
+
+``` python
+# Import des bibliotheque permettant de manipuler des formulaires HTML en Python
+from flask_wtf import Form
+from wtforms import StringField, IntegerField
+from wtforms.validators import DataRequired, ValidationError
+
+# Creation d'une classe heritant de 'flask_wtf.Form'
+class AdditionForm(Form):
+    # Definition de trois champs, comme sur une des capture d'ecran precedentes
+    number_a = IntegerField('Number A', validators=[DataRequired()])
+    number_b = IntegerField('Number B', validators=[DataRequired()])
+    operator = StringField('Operator', validators=[DataRequired()])
+```
+
+On peut noter les éléments suivants:
+* Pour chaque formulaire de notre application Flask, une classe héritant de `flask_wtf.Form` est définie
+* À chaque champs d'un formulaire, un attribut (de type  `StringField`, `IntegerField`, ...) est définie
+* Le premier attribut d'un champ correspond à son nom. Il sera aussi utilisé comme valeur d'étiquette par défaut
+* On peut associer des "validators" à chaque champ
+
+### c- Ajout du formulaire dans Flask
+
+Dans le fichier `app.py`, définir une fonction
+`fonction_formulaire_addition` qui crée un objet de type
+`AdditionForm`, et qui vérifiera si le formulaire doit être présenté
+aux utilisateurs, ou si il est dans un état validable.
+
+```python
+@app.route("/add", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
+def fonction_formulaire_addition():
+
+    form = AdditionForm()
+
+    if form.validate_on_submit():
+        return traitement_formulaire_addition(form)
+    else:
+        return afficher_formulaire_addition(form)
+```
+
+Nous pouvons faire les observations suivantes:
+- création d'un objet `form` à partir de la classe `AdditionForm`. Cet
+  objet contiendra les états (variables, données, ...) du formulaire,
+  et mettra en place les comportements nécessaires à la validation du
+  formulaire.
+- `form` possède une méthode de classe `validate_on_submit()`, qui
+  indique si le formulaire est validable:
+   - l'utilisateur a rempli tous les champs
+   - les champs sont correctement remplis
+
+Les fonctions `traitement_formulaire_addition` et
+`afficher_formulaire_addition` seront introduites dans la suite de
+cette Section.
+
+### d- Affichage du formulaire
+
+Il faut définir la fonction `afficher_formulaire_addition` qui fait
+appel à une template:
+
+```python
+def afficher_formulaire_addition(form):
+    return flask.render_template("form_addition.html.jinja2", form=form)
+```
+
+La template `templates/form_addition.html.jinja2` est définie de la
+manière suivante:
+
+{% raw %}
+``` jinja
+{% from "forms.html.jinja2" import render_field %}
+
+<html>
+    <head>
+        <title>Formulaires</title>
+    </head>
+    <body>
+    <form action="{{ url_for("fonction_formulaire_addition") }}" method="post">
+        {{ form.hidden_tag() }}
+
+        {{ render_field(form.number_a) }}
+        {{ render_field(form.operator) }}
+        {{ render_field(form.number_b) }}
+
+        <input type="submit">
+    </form>
+    </body>
+</html>
+```
+{% endraw %}
+
+Nous pouvons faire les observations suivantes:
+- la template récupère la macro Jinja2 `render_field` grace à l'instruction {% raw %}`{% from "forms.html.jinja2" import render_field %}`{% endraw %}
+- chaque champ du formulaire est rendu grâce à un appel du style {% raw %}`{{ render_field(form.<nom_du_champ>) }}`{% endraw %}
+- on indique où envoyer la template avec l'instruction {% raw %} `action="{{ url_for("fonction_formulaire_addition") }}"`{% endraw %}. 
+- La  fonction `url_for` prend en paramètre le nom et les arguments d'une fonction python, et retourne une URL qui cible cette fonction.
+
+### e- Traitement des données reçues par le formulaire
+
+La fonction de traitement des résultats du formulaire ressemble à cela:
+
+```python
+def traitement_formulaire_addition(form):
+    expression = "%s %s %s" % (form.number_a.data,
+                               form.operator.data,
+                               form.number_b.data)
+    resultat = "%s" % eval(expression)
+    return resultat
+```
+
+On peut noter que:
+* les champs d'un formulaire deviennent des attributs de l'objet `form` et sont accéssible sous forme d'attribut `form.<nom-du-champ>`
+
+### f- (bonus) Sécurisation du formulaire
+
+```python
+def operator_check(form, field):
+    authorized_operator = ["+", "-", "*", "/", "%"]
+    if field.data not in authorized_operator:
+        raise ValidationError('Field must be in %s' % authorized_operator)
+```
+
+```python
+# Add 'operator_check' to the checkers
+operator = StringField('Operator', validators=[DataRequired(), operator_check])
+```
+
 
 ## III- Étude d'un formulaire fonctionnel pour editer des posts
 
