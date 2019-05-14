@@ -22,22 +22,22 @@ administratifs:
 | `Fonctionnement`{: .label .label-blue} | | |
 | 1 | Un utilisateur prend contact à un guichet | Un utilisateur accède à une vue Flask via un navigateur web  |
 | 2 | L'agent administratif demande à l'utilisateur ce qu'il veut | Flask route la requête à la bonne fonction Python |
-| 3 | L'agent imprime un nouveau formulaire  correspondant à la demande         | Flask génère un formulaire HTML grâce à la template, et utilise l'état de avec l'objet héritant de `flask_wtf.Form` pour pré-remplir les champs |
+| 3 | L'agent imprime un nouveau formulaire  correspondant à la demande         | Flask génère un formulaire HTML grâce à la template, et utilise l'état de avec l'objet héritant de `flask_wtf.Form` pour préremplir les champs |
 | 4 | L'agent donne le formulaire à l'utilisateur | Flask retourne le formulaire HMTL à l'utilisateur  |
 | 5 | **L'utilisateur remplit le formulaire** | **L’utilisateur remplit le formulaire** |
 | 6 | L'utilisateur donne le formulaire à l'agent | L'utilisateur clique sur le bouton `submit` |
-| 7 | L'agent vérifie les information du formualire le formulaire | La fonction `form.validate_on_submit()` vérifie les informations du formulaire |
+| 7 | L'agent vérifie les informations du formulaire | La fonction `form.validate_on_submit()` vérifie les informations du formulaire |
 | `Si le formulaire est bien rempli`{: .label .label-green} | | |
 | 8 | L'agent accepte le formulaire et prend en compte la demande | Flask accepte le formulaire et fait des modifications en base de données |
 | `Si le formulaire est mal rempli`{: .label .label-red} | | |
 | 9 | Retour à l'étape 5 | Retour à l'étape 3 (en sauvegardant les informations entrées par l'utilisateur dans l'objet héritant `flask_wtf.Form`) | 
 
 De manière générale, pour implémenter correctement un formulaire avec
-Flask nous écrirons 3 fonction python:
+Flask nous écrirons trois fonction Python:
 * une fonction `create_or_process_form` qui sera en charge de récupérer une requête HTTP et de faire appel à une des deux fonctions suivantes.
 * une fonction `display_form_post` qui affiche le formulaire:
-  * vide lors du premier essaie de remplissage
-  * pré-remplit lors des essais supplémentaires
+  * vide lors du premier essai de remplissage
+  * préremplit lors des essais supplémentaires
 * une fonction `do_something` qui
   * traite les champs du formulaire préalablement validé
   * redirige l'utilisateur une fois le traitement fait
@@ -46,7 +46,7 @@ Flask nous écrirons 3 fonction python:
 et un object `form` héritant de la classe `flask_wtf.Form`, qui va
 définir les champs du formulaires, leurs contraintes, et qui à terme
 contiendra les états persistants de ces champs (.i.e pour lors de
-plusieurs essais, les utilisateurs n'aient pas à re-saisir les champs
+plusieurs essais, les utilisateurs n'aient pas à resaisir les champs
 déjà saisis).
 
 L'image ci-dessus résume le fonctionnement du formulaire avec la convention précédemment décrite:
@@ -61,7 +61,7 @@ formulaire ressemblera à cela:
 ![capture d'écran d'un formulaire pour calculer des expressions mathématiques](assets/img/session2/form_math_1.png)
 
 En validant le formulaire figurant dans l'image précédente,
-l'expression mathématique correspodant sera calculée, et le résultat
+l'expression mathématique correspondant sera calculée, et le résultat
 de son évaluation sera affiché comme suit:
 
 ![capture d'écran du résultat de l'évaluation d'une expression mathématiques](assets/img/session2/form_math_2.png)
@@ -73,7 +73,7 @@ de son évaluation sera affiché comme suit:
 <!-- **formulaires**, en suivant les [instructions -->
 <!-- suivantes](git.html#r%C3%A9cup%C3%A9rer-le-code-dune-branche-git-avec-pycharm). -->
 
-Avec votre navigateur, cliquez sur ce [lien (vers formulaires.zip)](https://github.com/badock/FlaskSar2019ExampleApp/archive/formulaires.zip) pour récupérer une archive ZIP permettant de démarrer cet exercice.
+Avec votre navigateur, cliquez sur ce [lien (vers formulaires.zip)](https://github.com/badock/FlaskSar2019ExampleApp/archive/formulaires.zip) pour récupérer une archive ZIP du [dépôt formulaires](https://github.com/badock/FlaskSar2019ExampleApp/tree/formulaires) permettant de démarrer cet exercice.
 
 Ce projet une application Flask basique qu'il faudra compléter.
 
@@ -111,7 +111,7 @@ héritant de `flask_wtf.Form`, et se charge d'afficher:
 ### b- Définition de la représentation logique d'un formulaire
 
 Tout d'abord, ajoutons au fichier `sar2019/forms.py` une
-réprésentation logique de notre Fomulaire:
+représentation logique de notre Fomulaire:
 
 ``` python
 # Import des bibliotheque permettant de manipuler des formulaires HTML en Python
@@ -128,17 +128,17 @@ class AdditionForm(Form):
 ```
 
 On peut noter les éléments suivants:
-* Pour chaque formulaire de notre application Flask, une classe héritant de `flask_wtf.Form` est définie
-* À chaque champs d'un formulaire, un attribut (de type  `StringField`, `IntegerField`, ...) est définie
-* Le premier attribut d'un champ correspond à son nom. Il sera aussi utilisé comme valeur d'étiquette par défaut
-* On peut associer des "validators" à chaque champ
+* Pour chaque formulaire de notre application Flask, une classe héritant de `flask_wtf.Form` est définie.
+* À chaque champ d'un formulaire, un attribut (de type  `StringField`, `IntegerField`, ...) est défini.
+* Le premier attribut d'un champ correspond à son nom. Il sera aussi utilisé comme valeur d'étiquette par défaut.
+* On peut associer des "validators" à chaque champ.
 
 ### c- Ajout du formulaire dans Flask
 
 Dans le fichier `app.py`, définir une fonction
 `fonction_formulaire_addition` qui crée un objet de type
 `AdditionForm`, et qui vérifiera si le formulaire doit être présenté
-aux utilisateurs, ou si il est dans un état validable.
+aux utilisateurs, ou s'il est dans un état validable.
 
 ```python
 @app.route("/add", methods=["GET", "POST"])
@@ -154,8 +154,8 @@ def fonction_formulaire_addition():
 ```
 
 Nous pouvons faire les observations suivantes:
-- création d'un objet `form` à partir de la classe `AdditionForm`. Cet
-  objet contiendra les états (variables, données, ...) du formulaire,
+- Création d'un objet `form` à partir de la classe `AdditionForm`. Cet
+  objet contiendra les états (variables, données ...) du formulaire,
   et mettra en place les comportements nécessaires à la validation du
   formulaire.
 - `form` possède une méthode de classe `validate_on_submit()`, qui
@@ -204,9 +204,9 @@ manière suivante:
 {% endraw %}
 
 Nous pouvons faire les observations suivantes:
-- la template récupère la macro Jinja2 `render_field` grace à l'instruction {% raw %}`{% from "forms.html.jinja2" import render_field %}`{% endraw %}
-- chaque champ du formulaire est rendu grâce à un appel du style {% raw %}`{{ render_field(form.<nom_du_champ>) }}`{% endraw %}
-- on indique où envoyer la template avec l'instruction {% raw %} `action="{{ url_for("fonction_formulaire_addition") }}"`{% endraw %}. 
+- La template récupère la macro Jinja2 `render_field` grâce à l'instruction {% raw %}`{% from "forms.html.jinja2" import render_field %}`{% endraw %}
+- Chaque champ du formulaire est rendu grâce à un appel du style {% raw %}`{{ render_field(form.<nom_du_champ>) }}`{% endraw %}
+- On indique où envoyer la template avec l'instruction {% raw %} `action="{{ url_for("fonction_formulaire_addition") }}"`{% endraw %}. 
 - La  fonction `url_for` prend en paramètre le nom et les arguments d'une fonction python, et retourne une URL qui cible cette fonction.
 
 ### e- Traitement des données reçues par le formulaire
@@ -223,7 +223,7 @@ def traitement_formulaire_addition(form):
 ```
 
 On peut noter que:
-* les champs d'un formulaire deviennent des attributs de l'objet `form` et sont accéssible sous forme d'attribut `form.<nom-du-champ>`
+* les champs d'un formulaire deviennent des attributs de l'objet `form` et sont accessibles sous forme d'attribut `form.<nom-du-champ>`
 
 ### f- (bonus) Sécurisation du formulaire
 
@@ -240,11 +240,17 @@ operator = StringField('Operator', validators=[DataRequired(), operator_check])
 ```
 
 
-## III- Étude d'un formulaire fonctionnel pour editer des posts
+## III- Étude d'un formulaire fonctionnel pour éditer des posts
 
-Depuis PyCharm, récupérez le contenu de la branche
-**TP1_formulaires**, en suivant les [instructions
-suivantes](git.html#r%C3%A9cup%C3%A9rer-le-code-dune-branche-git-avec-pycharm).
+<!-- Depuis PyCharm, récupérez le contenu de la branche -->
+<!-- **TP1_formulaires**, en suivant les [instructions -->
+<!-- suivantes](git.html#r%C3%A9cup%C3%A9rer-le-code-dune-branche-git-avec-pycharm). -->
+
+Avec votre navigateur, cliquez sur ce [lien (vers
+TP1_formulaires.zip)](https://github.com/badock/FlaskSar2019ExampleApp/archive/TP1_formulaires.zip)
+pour récupérer une archive ZIP du dépôt
+[TP1_formulaires](https://github.com/badock/FlaskSar2019ExampleApp/tree/TP1_formulaires)
+permettant de démarrer cet exercice.
 
 Le projet que vous venez de récupérer est un projet Flask complet qui
 servira de base pour expliquer les éléments introduits lors des
@@ -279,9 +285,8 @@ Nous pouvons faire les observations suivantes:
   permet de mettre en place plusieurs comportements:
     * lier le contexte de variable Python avec le formulaire affiché en HTML
     * vérification des valeurs entrées par l'utilisateur
-* La classe `PostEditForm` gère deux champs texte. Chaque champ
-  texte, qui sont vérifiés à la soumission du formulaire : ici, il
-  s'agira de vérifier que les valeurs envoyées ne sont pas vides.
+* La classe `PostEditForm` gère deux champs texte vérifiés à la soumission du formulaire : dans le cas présent, il
+  s'agit de vérifier que les valeurs envoyées ne sont pas vides.
 
 Dans la fonction `create_or_process_post`, nous allons maintenant
 créer un objet de type `PostEditForm` en lui passant:
