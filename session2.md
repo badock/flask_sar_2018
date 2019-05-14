@@ -69,9 +69,11 @@ de son évaluation sera affiché comme suit:
 
 ### a- Récupération du projet à compléter
 
-Depuis PyCharm, récupérez le contenu de la branche
-**formulaires**, en suivant les [instructions
-suivantes](git.html#r%C3%A9cup%C3%A9rer-le-code-dune-branche-git-avec-pycharm).
+<!-- Depuis PyCharm, récupérez le contenu de la branche -->
+<!-- **formulaires**, en suivant les [instructions -->
+<!-- suivantes](git.html#r%C3%A9cup%C3%A9rer-le-code-dune-branche-git-avec-pycharm). -->
+
+Avec votre navigateur, cliquez sur ce [lien (vers formulaires.zip)](https://github.com/badock/FlaskSar2019ExampleApp/archive/formulaires.zip) pour récupérer une archive ZIP permettant de démarrer cet exercice.
 
 Ce projet une application Flask basique qu'il faudra compléter.
 
