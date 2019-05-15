@@ -39,14 +39,8 @@ elle ressemblerait à ça :
 
 Les ressources complémentaires que le navigateur récupère ensuite (grâce à
 des requêtes GET similaires à la requête de la page) comprennent : les images,
-vidéos, sons, etc., mais surtout les feuilles de style et les scripts. Une
-feuille de style, habituellement au format CSS que nous verrons plus tard,
-décrit comment mettre en forme le contenu de la page pour qu'il prenne
-l'apparance à laquelle nous sommes habitués. Les scripts, habituellement au
-format Javascript, rendent la page dynamique. Sur Facebook, cela correspond
-par exemple à permettre de poster des commentaires, mettre des "likes" ou
-consulter ses notifications sans avoir à quitter la page. On obtient alors
-le rendu suivant :
+vidéos, sons, etc., mais surtout les feuilles de style CSS et les scripts
+Javascript. On obtient alors le rendu suivant :
 
 ![rendu de la page avec CSS et Javascript](/assets/img/session1/withcss.png)
 
