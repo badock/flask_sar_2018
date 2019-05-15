@@ -472,8 +472,57 @@ p {
 ```
 
 
-
-
 # Page dynamique (Javascript)
 
-TODO
+Javascript permet de rendre une page dynamique, c'est-à-dire
+qu'on peut modifier son contenu au cours du temps et réagir à
+des actions effectuées par l'utilisateur.
+
+Le but ici n'est pas de comprendre comment fonctionne Javascript
+(une session sera dédiée à cela), mais de comprendre son rôle et
+comment il interagit avec la page HTML.
+
+Pour cela, nous complétons l'exemple vu précédemment par un
+formulaire de soumission de message. On indique au formulaire
+via son attribut "onsubmit" qu'il faut exécuter une fonction
+Javascript à la soumission du formulaire. Cette fonction se charge
+de vérifier que le message entré n'est pas vide (si c'est le cas
+elle affiche un pop-up d'avertissement), ajoute le message dans
+la page HTML et vide le champ de texte.
+
+Exemple interactif :
+[https://jsfiddle.net/chardetm/m3zueqxL/78/](https://jsfiddle.net/chardetm/m3zueqxL/78/)
+
+Javascript :
+```javascript
+// Fonction appelée à la soumission du formulaire
+function checkAndSend(message_form) {
+  // On récupère le message entré par l'utilisateur
+  message = message_form.message.value;
+  if (message == "") {
+    // On affiche un popup
+    alert("Le message est vide !");
+  } else {
+    postMessage(message);
+    // On vide le champ de texte
+    message_form.message.value = "";
+  }
+  return false; // Ne pas soumettre le formulaire
+}
+
+function postMessage(message) {
+  // Créer <p> et <span>
+  var p_node = document.createElement("p");
+  var span_node = document.createElement("span");
+  // Ajouter les classes à <span>
+  span_node.classList.add("message");
+  span_node.classList.add("by-me");
+  // Créer le texte
+  var text_node = document.createTextNode(message);
+  // Insérer le texte dans <span> et <span> dans <p>
+  span_node.appendChild(text_node);
+  p_node.appendChild(span_node);
+  // Ajouter <p> dans le <div> avec l'id "messages"
+  document.getElementById("messages").appendChild(p_node);
+}
+```
