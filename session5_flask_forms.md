@@ -1,15 +1,14 @@
 ---
-title: Session 2 - Demander de l'information à l'utilisateur avec les formulaires
+title: Session 5 - Demander de l'information à l'utilisateur avec les formulaires
 excerpt: ""
-order: 1
+order: 5
 ---
-
-# Session 2 - Demander de l'information à l'utilisateur avec les formulaires
 
 1. TOC
 {:toc}
 
-## I- Rappels sur les formulaires
+
+# Rappels sur les formulaires
 
 Les formulaires sont une manière de demander de l'information aux
 utilisateurs. Ils fonctionnent de la même manière que les formulaires
@@ -52,7 +51,7 @@ déjà saisis).
 L'image ci-dessus résume le fonctionnement du formulaire avec la convention précédemment décrite:
 ![capture d'écran montrant l'architecture d'un formulaire](/assets/img/session2/schema.png)
 
-## II- Un formulaire pour calculer des expressions mathématiques
+# Un formulaire pour calculer des expressions mathématiques
 
 Dans cette section nous allons coder un formulaire qui permettra de
 calculer des expressions mathématiques avec un formulaire. Le
@@ -67,7 +66,7 @@ de son évaluation sera affiché comme suit:
 ![capture d'écran du résultat de l'évaluation d'une expression mathématiques](assets/img/session2/form_math_2.png)
 
 
-### a- Récupération du projet à compléter
+## Récupération du projet à compléter
 
 <!-- Depuis PyCharm, récupérez le contenu de la branche -->
 <!-- **formulaires**, en suivant les [instructions -->
@@ -108,7 +107,7 @@ héritant de `flask_wtf.Form`, et se charge d'afficher:
 * le code HTML pour afficher d'éventuels messages d'erreurs lors de la
   validation du formulaire
 
-### b- Définition de la représentation logique d'un formulaire
+## Définition de la représentation logique d'un formulaire
 
 Tout d'abord, ajoutons au fichier `sar2019/forms.py` une
 représentation logique de notre Fomulaire:
@@ -133,7 +132,7 @@ On peut noter les éléments suivants:
 * Le premier attribut d'un champ correspond à son nom. Il sera aussi utilisé comme valeur d'étiquette par défaut.
 * On peut associer des "validators" à chaque champ.
 
-### c- Ajout du formulaire dans Flask
+## Ajout du formulaire dans Flask
 
 Dans le fichier `app.py`, définir une fonction
 `fonction_formulaire_addition` qui crée un objet de type
@@ -167,7 +166,7 @@ Les fonctions `traitement_formulaire_addition` et
 `afficher_formulaire_addition` seront introduites dans la suite de
 cette Section.
 
-### d- Affichage du formulaire
+## Affichage du formulaire
 
 Il faut définir la fonction `afficher_formulaire_addition` qui fait
 appel à une template:
@@ -209,7 +208,7 @@ Nous pouvons faire les observations suivantes:
 - On indique où envoyer la template avec l'instruction {% raw %} `action="{{ url_for("fonction_formulaire_addition") }}"`{% endraw %}. 
 - La  fonction `url_for` prend en paramètre le nom et les arguments d'une fonction python, et retourne une URL qui cible cette fonction.
 
-### e- Traitement des données reçues par le formulaire
+## Traitement des données reçues par le formulaire
 
 La fonction de traitement des résultats du formulaire ressemble à cela:
 
@@ -225,7 +224,7 @@ def traitement_formulaire_addition(form):
 On peut noter que:
 * les champs d'un formulaire deviennent des attributs de l'objet `form` et sont accessibles sous forme d'attribut `form.<nom-du-champ>`
 
-### f- (bonus) Sécurisation du formulaire
+## (bonus) Sécurisation du formulaire
 
 ```python
 def operator_check(form, field):
@@ -240,7 +239,7 @@ operator = StringField('Operator', validators=[DataRequired(), operator_check])
 ```
 
 
-## III- Étude d'un formulaire fonctionnel pour éditer des posts
+# Étude d'un formulaire fonctionnel pour éditer des posts
 
 <!-- Depuis PyCharm, récupérez le contenu de la branche -->
 <!-- **TP1_formulaires**, en suivant les [instructions -->
@@ -264,7 +263,7 @@ Dans cet exemple d'application, un post contient 3 données:
 **Nous allons maintenant voir comment fonctionne le formulaire pour
 créer ou éditer un post.**
 
-### A) Définition du modèle pour le formulaire
+## Définition du modèle pour le formulaire
 
 Dans le fichier `sar2019/forms.py`, nous allons créer une classe
 `PostEditForm` qui contiendra une description "logique" de notre
@@ -293,7 +292,7 @@ créer un objet de type `PostEditForm` en lui passant:
 * une représentation d'un post en base de données si on édite un post
 * `None` si on crée un nouveau post
 
-### B) Ajouter les vues du formulaire
+## Ajouter les vues du formulaire
 
 ```python
 @app.route("/posts/edit/", methods=["GET", "POST"])
@@ -377,6 +376,3 @@ def save_post_and_redirect_to_homepage(post, form):
     return flask.redirect(flask.url_for('index'))
 ```
 
-## V- Prochaine session
-
-mise en page avec du CSS et le framework Bootstrap: [next session](session3.html)

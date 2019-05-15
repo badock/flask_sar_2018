@@ -1,0 +1,212 @@
+---
+title: Session 1 - Introduction à HTML, CSS et Javascript
+excerpt: ""
+order: 1
+---
+
+
+Une page web, c'est-à-dire toute page d'un site internet consultable à
+l'aide d'un navigateur web, est composée de plusieurs éléments. Son contenu,
+c'est-à-dire l'ensemble du texte, des liens, du contenu multimédia,
+est décrit dans un fichier HTML (pour Hypertext Markup Language). Ce
+fichier décrit aussi l'organisation logique du contenu (qu'est-ce qui est
+un titre, qu'est-ce qui est un menu, une section, une liste, etc.). La façon
+dont ce contenu est affiché (emplacement, taille, couleur, etc. de chaque
+élément) est décrit dans un ou plusieurs fichiers de style CSS (pour
+Cascading Style Sheets).
+
+Ces deux éléments suffisent à décrire une page web dite "statique" (dont
+le contenu ne change pas). Cependant, de nos jours la plupart des pages web
+que nous consultons sont "dynamiques" (leur contenu ou la façon dont il est
+affiché varie au cours du temps et/ou en fonction des actions de
+l'utilisateur). De bons exemples de pages web dynamiques sont une messagerie
+instantannée ou un réseau social (les interactions telles qu'envoyer un
+message, commenter ou réagir à une publication ou charger plus de contenu
+une fois arrivé à la fin du contenu déjà chargé ne demandent pas de changer
+de page). Ceci est fait grâce à un langage de programmation interprétable
+par les navigateurs internet appelé Javascript.
+
+1. TOC
+{:toc}
+
+# Description du contenu : HTML
+
+Une page web est décrite dans un document HTML comme un arbre : un élément
+peut contenir d'autres éléments, qui eux-mêmes peuvent contenir d'autres
+éléments, etc. Cette structure d'arbre est appelée DOM (pour Document
+Object Model). Dans le reste de ce cours, nous utiliserons la
+dernière version du HTML, le HTML 5.
+
+## Structure générale d'une page
+
+Un élément peut être du texte ou une balise (vide ou non-vide). Les
+balises peuvent avoir des attributs (par exemple l'URL de l'image voulue
+pour une balise image). Les balises non-vides peuvent elles-même contenir
+des éléments (textes et/ou balises). Voici un exemple minimal que nous
+allons analyser :
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Titre de la page</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <!-- contenu de la page -->
+    </body>
+</html>
+```
+
+- `<!DOCTYPE html>` est une balise vide de type '!doctype' marquée d'un
+attribut sans valeur "html" qui doit être placée au tout début du fichier
+pour indiquer au navigateur que notre fichier est au format HTML 5.
+- `<html>` est une balise non-vide de type 'html' qui contient l'ensemble
+de la page HTML. Tout ce qui est déclaré entre `<html>` et sa balise de
+fermeture `</html>` est considéré comme appartenant à la page. Ce
+comportement est le même pour toutes les balises non-vides. La norme
+prévoit que le contenu de la balise <html> soit constiué d'une balise
+non-vide de type 'head' qui contient toutes les informations qui ne sont
+pas directement du contenu (titre, mots clés pour les moteurs de recherche,
+lien vers les fichiers de style CSS ou les scripts Javascript, etc.) ainsi
+que d'une balise non-vide de type 'body' qui contient le réel contenu de la
+page.
+- `<meta charset="utf-8">` est une balise vide de type 'meta' qui indique
+au navigateur la façon dont les caractères sont encodés dans le fichier
+grâce à son attribut avec valeur 'charset' (qui a ici pour valeur la chaîne
+de caractères "utf-8" qui est un type d'encodage).
+- `<title>` est une balise non-vide dont le contenu est le titre de la page
+(affiché par le navigateur sur l'onglet de la page et dans la barre de titre
+quand l'onglet est actif, affiché par les moteurs de recherche quand ils
+mettent un lien vers la page dans leurs résultats).
+- `<link rel="stylesheet" href="style.css">` est une balise vide indiquant
+que le fichier de style CSS "style.css" doit être chargé pour afficher la
+page correctement.
+- `<script src="script.js">` est une balise non-vide indiquant que le
+script "script.js" doit être chargé pour que la page se comporte
+correctement.
+- `<!-- contenu de la page -->` est un commentaire (démarré par `<!--` et
+terminé par `-->`).
+
+## Description du contenu
+
+Pour le remplissement du contenu de la page, le plus simple est d'étudier
+un autre exemple. Le code suivant est un exemple de contenu pour la balise
+`<body>`. Une version éditable avec aperçu pour l'expérimentation est
+disponible ici :
+[https://jsfiddle.net/chardetm/k5Law2mc/25/](https://jsfiddle.net/chardetm/k5Law2mc/25/)
+
+```html
+<h1>
+  Ma première page web (titre niveau 1)
+</h1>
+<p>
+  Ceci est un paragraphe.
+</p>
+
+<h2>
+  Les balises basiques (titre niveau 2)
+</h2>
+<h3>
+  Retour à la ligne et lien (titre niveau 3)
+</h3>
+<p>
+  Un autre paragraphe suivi d'un retour à la ligne (br) puis d'un lien vers Google.
+  <br>
+  <a href="https://www.google.fr/">Texte du lien</a>
+</p>
+<h3>
+  Image
+</h3>
+<img src="https://www.imt-atlantique.fr/sites/default/files/users/user336/IMT%20Atlantique%20-%203%20campus.png">
+<h3>
+  Mise en forme de texte (déconseillé)
+</h3>
+<p>
+  Il est plutôt conseillé d'utiliser le CSS pour la mise en forme du texte. Voici cependant des
+  balises de mise en forme rapide pour le prototypage : <b>ceci est en gras</b>, <i>ceci est en
+  italique</i> et <u>ceci est souligné</u>.
+</p>
+
+<h2>
+  Les listes
+</h2>
+<p>
+  Les listes peuvent être ordonnées (les éléments sont alors numérottés) ou non-ordonnées (les
+  éléments sont en général précédés d'un tiret ou d'une bulle).
+</p>
+<h3>
+  Listes ordonnées (ordered list: ol)
+</h3>
+<ol>
+  <li>Premier élément</li>
+  <li>Deuxième élément</li>
+</ol>
+<h3>
+  Listes non-ordonnées (unordered list: ul)
+</h3>
+<ul>
+  <li>Premier élément</li>
+  <li>Deuxième élément</li>
+</ul>
+
+<h2>
+  Les tableaux
+</h2>
+<p>
+  Les tableaux sont contenus dans des balises "table". Une balise contient plusieurs balises
+  "tr", une pour chaque ligne du tableau. Enfin, chaque balise "tr" contient des balises "th"
+  ou "td" : une par colonne. Une balise "th" indique une cellule de titre (header), tandis que
+  "td" indique une cellule normale. Par défaut, les cellules n'ont pas de bordure, mais cela peut
+  être changé en CSS.
+</p>
+<table>
+  <tr>
+    <th>Nom</th>
+    <th>Âge</th>
+    <th>Pays</th>
+  </tr>
+
+  <tr>
+    <td>Maria</td>
+    <td>25 ans</td>
+    <td>Espagne</td>
+  </tr>
+  <tr>
+    <td>Nicolas</td>
+    <td>19 ans</td>
+    <td>France</td>
+  </tr>
+</table>
+```
+
+## Formulaires
+
+Les formulaires permettent à l'utilisateur d'entrer des informations pour
+qu'elles soient traitées par le site web. Ils peuvent servir à se connecter
+à un site, à créer un compte, à faire un virement bancaire, à envoyer un
+message instantané ou un commentaire, etc.
+
+Un formulaire est composé de plusieurs entrées (input) :
+des champs de texte, menus déroulants, cases à cocher etc.
+Ces entrées sont en général assorties d'un ainsi que d'un
+bouton de soumission de formulaire.
+
+Il est en outre possible de signaler au navigateur quel est le type de
+réponse attendue pour un champ de formulaire (par exemple s'il est
+indispensable de remplir un champ, ou s'il doit contenir une adresse
+e-mail valide).
+
+TODO
+
+
+# Description du style (CSS)
+
+TODO
+
+
+# Page dynamique (Javascript)
+
+TODO

@@ -1,22 +1,14 @@
 ---
-title: Home
+title: Accueil
 feature_image: "/assets/img/clouds.png"
 excerpt: ""
-order: 1
+order: 0
 ---
 
-# Web programming with Flask
+# Programmation d'une application web avec Flask
 
-### Introduction
-
-
-### Objectives
-
-
-### Outline
-
-- [Session 0](session0.html): Getting started with Flask
-
-### Contact
+## Contact
 
 - [Jonathan Pastor](http://jonathanpastor.fr)
+- Maverick Chardet : maverick.chardet@inria.fr
+- Adrien Lebre

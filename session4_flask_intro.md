@@ -1,13 +1,12 @@
 ---
-title: Session 1 - Développer une application Flask simple
+title: Session 4 - Développer une application Flask simple
 excerpt: ""
-order: 1
+order: 4
 ---
-
-# Session 1 - Démarrer avec Flask et Python
 
 1. TOC
 {:toc}
+
 
 Cette session part du principe que vous avez fait la [session
 0](session0.html) : avant de démarrer cette session, assurez vous de
@@ -17,7 +16,7 @@ n'est pas le cas, veuillez suivre les instructions de la [session
 ci-dessous.
 
 
-## I- Une première application web simple, avec Flask
+# Une première application web simple, avec Flask
 
 Nous allons voir dans cette Section comment afficher un message dans le navigateur de l'utilisateur. Pour cela nous allons:
 
@@ -38,12 +37,12 @@ Lancer l'application Flask, et accéder à cette vue via l'URL [http://127.0.0.1
 
 Nous pouvons faire les observations suivantes:
 
-* L'URL à entrer dans le navigateur est définie par la valeur passée à ```@app.route```
+* L'URL à entrer dans le navigateur est définie par la valeur passée à `@app.route`
 * Le résultat de l'execution de la fonction est envoyé au navigateur
 * **Le nom donné à la fonction Python n'a pas d'importance**
 
 
-## II- Envoyer du HTML à l'utilisateur
+# Envoyer du HTML à l'utilisateur
 
 Dans cette sous-section nous allons voir comment renvoyer une réponse
 HTML à l'utilisateur. Nous verrons d'abord qu'il est tout d'abord
@@ -53,7 +52,7 @@ difficilement HTML et Python. Nous verrons ensuite comment simplifier
 cette cohabitation en utilisant des fichiers **Templates** basés sur
 le moteur [Jinja2](http://jinja.pocoo.org/docs/2.10/).
 
-### a) Retourner du HTML brut : une mauvaise idée
+## Retourner du HTML brut : une mauvaise idée
 
 Nous pouvons faire une nouvelle vue, similaire à celle codée dans la
 Section précédente, mais qui cette fois retournera une chaine de
@@ -85,7 +84,7 @@ Une autre approche plus acceptable consiste à mettre le code HTML dans
 un fichier HTML séparé du code Python, et de demander à la fonction
 Python de servir le contenu de ce fichier HTML.
 
-### b) Simplification grâce aux templates Jinja2
+## Simplification grâce aux templates Jinja2
 
 Flask utilise le moteur de template Jinja2
 
@@ -128,7 +127,7 @@ avec Python et Flask.
 
 
 
-### c) Une Template permet de générer du texte dynamiquement
+## Une Template permet de générer du texte dynamiquement
 
 Dans la Section II-a, nous avons vu comment servir une page HTML
 statique. Le message affiché par cette page a toujours la même valeur,
@@ -196,7 +195,7 @@ contenu des variables Python. De plus des structures de contrôle
 telles que les `if/else` et les `for/while` permettent de
 structure le code Jinja2.
 
-## III- Passer de l'information dans l'URL
+# Passer de l'information dans l'URL
 
 Il est possible de récupérer des informations contenues dans l'URL que
 l'utilisateur accède. Le code suivant définie une fonction qui prend 3
@@ -215,6 +214,3 @@ résultat suivant:
 
 ![capture d'écran montrant le programme d'installation de miniconda](/assets/img/session1/screen5.png)
 
-## IV- Prochaine session
-
-Demander de l'information avec les formulaires: [next session](session2.html)

@@ -1,13 +1,12 @@
 ---
-title: Session 0 - Démarrer avec Flask et Python
+title: Session 3 - Démarrer avec Flask et Python
 excerpt: ""
-order: 1
+order: 3
 ---
-
-# Session 0 - Démarrer avec Flask et Python
 
 1. TOC
 {:toc}
+
 
 Dans le cas où vous ne disposiez pas déjà d'un environnement de
 développement Python, nous en installerons un dans cette session en utilisant le logiciel
@@ -16,9 +15,9 @@ configurer rapidement un tel environnement. Si vous disposez déjà d'un
 environnement Python fonctionnel, vous pouvez sauter cette étape.
 
 
-## I- Installation d'un environnement Python avec Miniconda et PyCharm
+# Installation d'un environnement Python avec Miniconda et PyCharm
 
-### A- Installation de Miniconda
+## Installation de Miniconda
 
 Avec votre navigateur, visitez [https://docs.conda.io/en/latest/miniconda.html](https://docs.conda.io/en/latest/miniconda.html) pour télécharger le programme d'installation qui correspond à votre configuration.
 
@@ -32,12 +31,9 @@ Vous pouvez le programme d'installation : Miniconda est maintenant installé sur
 
 **Si l'installation n'a pas fonctionné correctement ou des messages d'erreur sont apparus, parlez-en à un des enseignants afin de ne pas prendre de retard sur la session.**
 
-### B- Installation de Git
+## Installation de Git
 
-### C- Installation et configuration de PyCharm
-
-
-#### 1. Installation de PyCharm
+## Installation et configuration de PyCharm
 
 Avec votre navigateur, visitez [https://www.jetbrains.com/pycharm/download](https://www.jetbrains.com/pycharm/download) pour télécharger le programme d'installation de "PyCharm" qui correspond à votre configuration.
 
@@ -51,7 +47,7 @@ Une fois l'installation terminée avec succès, lancez "PyCharm". Vous devriez v
 
 ![capture d'écran montrant le programme d'installation de miniconda](/assets/img/session0/screen1.png)
 
-#### 2. Vérification de l'installation
+## Vérification de l'installation
 
 Pour vérifier que "PyCharm" et "Miniconda" sont bien intégrés, nous allons créer un projet basique. Sur l'écran d'accueil de "PyCharm", cliquez sur *create new project*:
 
@@ -86,7 +82,7 @@ Avec votre navigateur web, tapez l'[URL](https://fr.wikipedia.org/wiki/Uniform_R
 
 
 
-## II- Démarrer avec le projet exemple depuis Github
+# Démarrer avec le projet exemple depuis Github
 
 Nous allons maintenant récupérer un exemple de projet Flask
 fonctionnel, qui met en oeuvre les éléments qui seront introduits au
@@ -96,7 +92,7 @@ conseillons vivement de vous faire un compte sur Github, et de
 l'utiliser pour héberger vos futurs projets de développement
 logiciels.
 
-### A- Récupération du code depuis Github
+## Récupération du code depuis Github
 
 Le projet d'exemple est hébergé dans le dépot suivant:
 
@@ -111,10 +107,8 @@ hébergé dans le dépot précédent:
 
 ![capture d'écran montrant comment installer les dépendances logicielles](/assets/img/session0/screen17.png)
 
-### B- Lancement du projet et configuration du mode _deboggage_
+## Lancement du projet et configuration du mode _deboggage_
 
 ![capture d'écran montrant comment installer les dépendances logicielles](/assets/img/session0/screen18.png)
 
-## Next step : implementing a view
 
-Congratulations! You can now proceed with the [next session](/session1)
