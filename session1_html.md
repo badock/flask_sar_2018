@@ -96,7 +96,7 @@ Pour le remplissement du contenu de la page, le plus simple est d'étudier
 un autre exemple. Le code suivant est un exemple de contenu pour la balise
 `<body>`. Une version éditable avec aperçu pour l'expérimentation est
 disponible ici :
-[https://jsfiddle.net/chardetm/k5Law2mc/25/](https://jsfiddle.net/chardetm/k5Law2mc/25/)
+[http://tiny.cc/SARhtml](http://tiny.cc/SARhtml)
 
 ```html
 <h1>
@@ -212,7 +212,7 @@ ensuite traitées.
 
 Voici un exemple de formulaire. Une version éditable avec aperçu pour
 l'expérimentation est disponible ici :
-[https://jsfiddle.net/chardetm/d8thoa6y/12/](https://jsfiddle.net/chardetm/d8thoa6y/12/)
+[http://tiny.cc/SARform](http://tiny.cc/SARform)
 
 ```html
 <!-- Soumission à la page /signup par méthode POST -->
@@ -324,7 +324,7 @@ bord de la couleur de fond et le texte) de 12 pixels. De plus, nous demandons
 au navigateur d'essayer plusieurs polices dans l'ordre donné (selon les
 systèmes d'exploitation tout le monde n'a pas les mêmes polices installées).
 
-Exemple interactif : [https://jsfiddle.net/chardetm/m3zueqxL/17/](https://jsfiddle.net/chardetm/m3zueqxL/17/)
+Exemple interactif : [http://tiny.cc/SARcss1](http://tiny.cc/SARcss1)
 
 HTML :
 
@@ -365,7 +365,7 @@ du nom de la classe à cibler. Dans l'exemple suivant, les
 deux premiers "span" ont la classe "message" tandis que le dernier a
 la classe "message" et la classe "by-me".
 
-Exemple interactif : [https://jsfiddle.net/chardetm/m3zueqxL/22/](https://jsfiddle.net/chardetm/m3zueqxL/22/)
+Exemple interactif : [http://tiny.cc/SARcss2](http://tiny.cc/SARcss2)
 
 HTML :
 
@@ -419,7 +419,7 @@ Dans l'exemple suivant, la balise ```<div>``` a pour identifiant
 "topbar".
 
 Exemple interactif :
-[https://jsfiddle.net/chardetm/m3zueqxL/26/](https://jsfiddle.net/chardetm/m3zueqxL/26/)
+[http://tiny.cc/SARcss](http://tiny.cc/SARcss)
 
 HTML :
 ```html
@@ -491,7 +491,7 @@ elle affiche un pop-up d'avertissement), ajoute le message dans
 la page HTML et vide le champ de texte.
 
 Exemple interactif :
-[https://jsfiddle.net/chardetm/m3zueqxL/78/](https://jsfiddle.net/chardetm/m3zueqxL/78/)
+[http://tiny.cc/SARjs](http://tiny.cc/SARjs)
 
 Javascript :
 ```javascript

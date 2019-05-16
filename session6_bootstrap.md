@@ -104,7 +104,7 @@ qui est la plus couramment utilisée est la largeur de
 l'écran.
 
 Considérons l'exemple interactif suivant :
-[https://jsfiddle.net/chardetm/109u3cfz/39/](https://jsfiddle.net/chardetm/109u3cfz/39/)
+[http://tiny.cc/SARfb](http://tiny.cc/SARfb)
 
 L'affichage est correct en écran large :
 ![Site en écran large](/assets/img/session6/fakebook_wide.png)
@@ -136,7 +136,7 @@ Dans la version suivante de l'exemple interactif, deux media
 querries font que l'affichage est à une colonne jusqu'à 600
 pixels de large, deux colonnes de 600 à 1200 pixels, et
 quatre colonnes au delà de 1200 pixels :
-[https://jsfiddle.net/chardetm/109u3cfz/44/](https://jsfiddle.net/chardetm/109u3cfz/44/)
+[http://tiny.cc/SARfbr](http://tiny.cc/SARfbr)
 
 
 # La grille Bootstrap
@@ -209,7 +209,7 @@ tailles des éléments, donc plus besoin non plus de
 media querries !
 
 Exemple interactif :
-[https://jsfiddle.net/chardetm/109u3cfz/50/](https://jsfiddle.net/chardetm/109u3cfz/50/)
+[http://tiny.cc/SARfbbs](http://tiny.cc/SARfbbs)
 
 La grille Bootstrap permet d'autres choses que nous
 ne couvrons pas ici, telles que l'alignement vertical
