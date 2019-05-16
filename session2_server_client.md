@@ -26,6 +26,8 @@ On peut en tirer trois informations :
 
 ## Côté client
 
+![affichage d'une page côté client](/assets/img/session1/client_get.png)
+
 Quand l'utilisateur demande au navigateur internet de voir cette page (en
 tapant son adresse ou en cliquant sur un lien y menant), ce dernier envoie
 une requête `GET '/IMTAtlantique/` au serveur de Facebook. Le serveur
@@ -45,6 +47,8 @@ Javascript. On obtient alors le rendu suivant :
 ![rendu de la page avec CSS et Javascript](/assets/img/session1/withcss.png)
 
 ## Côté serveur
+
+![affichage d'une page côté serveur](/assets/img/session1/server_get.png)
 
 Dans la sous-section précédente, nous avons vu que le serveur construisait une
 page qui était envoyée au navigateur web de l'utilisateur (le client). Nous
@@ -90,6 +94,8 @@ ressemble :
 
 ## Côté client
 
+![affichage d'une page côté client](/assets/img/session1/client_post.png)
+
 Quand l'utilisateur demande la publication du commentaire, le navigateur envoie une
 requête `POST '/api/graphql/'` contenant le message entré par l'utilisateur et le
 numéro de la publication. Il reçoit ensuite une réponse du serveur (`200` si tout
@@ -97,6 +103,8 @@ s'est bien passé), et un des scripts Javascript de la page Facebook va alors me
 à jour la page et afficher le nouveau commentaire posté.
 
 ## Côté serveur
+
+![affichage d'une page côté client](/assets/img/session1/server_post.png)
 
 À la réception de la requête `POST`, l'application serveur analyse la demande et appelle
 une fonction dont le but est de poster le commentaire d'une publication. Cette dernière
