@@ -8,22 +8,23 @@ order: 4
 {:toc}
 
 
-Cette session part du principe que vous avez fait la [session
-0](session0.html) : avant de démarrer cette session, assurez vous de
-bien avoir un environnement de développement Flask fonctionnel. Si ce
-n'est pas le cas, veuillez suivre les instructions de la [session
-0](session0.html) avant de poursuivre avec les instructions
-ci-dessous.
+Avant de démarrer cette session, assurez vous de bien avoir un
+environnement de développement Flask fonctionnel. Si ce n'est pas le
+cas, veuillez suivre les instructions de la [session 3](/session3_install.html)
+avant de poursuivre avec les instructions ci-dessous.
 
 
 # Une première application web simple, avec Flask
 
-Nous allons voir dans cette Section comment afficher un message dans le navigateur de l'utilisateur. Pour cela nous allons:
+Nous allons voir dans cette Section comment afficher un message dans le navigateur de l'utilisateur. 
 
-* Créer un nouveau projet Flask qui aura pour nom "FlaskTP1"
-* Coder une vue qui affichera le texte "Helloworld" quand l'utilisateur accèdera à l'URL [http://127.0.0.1:5000/greetings](http://127.0.0.1:5000/greetings)
+Tout d'abord commençons par créer un nouveau projet Flask qui aura
+pour nom "FlaskTP1" en suivant les instructions de la [session
+précédente](http://localhost:4000/session3_install.html#v%C3%A9rification-de-linstallation).
 
-Pour cela, éditez le fichier `app.py` généré par PyCharm de manière à ce qu'il contienne le code suivant:
+Nous allons maintenant coder une vue qui affichera le texte
+"Helloworld". Pour cela, éditez le fichier `app.py` généré par PyCharm
+de manière à ce qu'il contienne le code suivant:
 
 ```python
 @app.route('/greetings')
@@ -50,27 +51,26 @@ l'utilisateur accède. Le code suivant définie une fonction qui prend 3
 paramètres, et affiche un calcul:
 
 ```python
-@app.route("/sum/<label>/<int:a>/<int:b>")
-def compute_sum(label, a, b):
+@app.route("/sum/<lang>/<int:a>/<int:b>")
+def compute_sum(lang, a, b):
     c = a + b
-    return label+" "+str(a)+" et "+str(b)+" est "+str(c)
-    
-    # La syntaxe suivante est aussi correcte:
-    # return "%s %s et %s est %s" % (label, a, b, c)
+    if lang == "fr":
+        return "La somme de %d et %d est %d" % (a, b, c)
+    else:
+        return "The sum of %d and %d is %d" % (a, b, c)
 ```
 
-Quand on accède à l'URL [http://127.0.0.1:5000/sum/la somme de
-/3/5](http://127.0.0.1:5000/sum/la somme de /3/5), on obtient le
+Quand on accède à l'URL [http://127.0.0.1:5000/sum/en/3/5](http://127.0.0.1:5000/sum/en/3/5), on obtient le
 résultat suivant:
 
 ![capture d'écran montrant le programme d'installation de miniconda](/assets/img/session1/screen5.png)
 
 
-# Vers des vues plus complexes avec les templates
+# Vers des vues structurées avec les templates
 
 Dans cette section nous verrons comment construire une réponse
 structurée. Dans un premier temps nous retournerons un texte généré en
-Python et transmit à Flask. Dans un second temps, nous verrons comment
+Python et transmis à Flask. Dans un second temps, nous verrons comment
 écrire la même chose en utilisant le moteur de template Jinja2.
 
 
@@ -79,8 +79,9 @@ Python et transmit à Flask. Dans un second temps, nous verrons comment
 Prenons l'exemple suivant:
 
 ```python
+import flask # mettre cette ligne en debut de fichier
+
 @app.route("/complex_view")
-@app.route("/")
 def complex_view():
     # variables
     colors = ["red", "blue", "green", "purple", "dark", "white"]
@@ -106,8 +107,11 @@ def complex_view():
                           mimetype="text")
 ```
 
-En visitant l'URL ... , vous obtiendez ce resultat:
-![capture d'écran montrant le result du premier programme avec une vue complexe](/assets/img/session4/complex_view.png)
+En visitant l'URL
+[http://127.0.0.1:5000/complex_view_template](http://127.0.0.1:5000/complex_view_template),
+vous obtiendez ce resultat: ![capture d'écran montrant le result du
+premier programme avec une vue
+complexe](/assets/img/session4/complex_view.png)
 
 La fonction `complex_view` retourne une réponse textuelle construite
 avec deux structures de contrôle : un `for` et un `if`. Bien qu'étant
@@ -263,18 +267,22 @@ Dans cette section nous allons voir comment renvoyer une réponse HTML
 <!-- est difficilement lisible. Nous verrons dans la sous-section suivante -->
 <!-- comment faire mieux. -->
 
-
-## Simplification de la génération de HTML via les templates
-
 <!-- Flask utilise le moteur de template Jinja2 -->
 
 Tout d'abord récupérer une archive de code
 [session_4_engineer_view.zip](https://github.com/badock/FlaskSar2019ExampleApp/archive/session_4_engineer_view.zip)
-contenant un projet qui servira de base pour cet exercice. Ce TP
-contient:
-* une base de données qui s'initialisera toute seule : les bases de
-  données seront introduites dans une future session.
-* Une classe ingénieur persistante:
+contenant un projet qui servira de base pour cet exercice. 
+
+Ce TP contient Une base de données pour stocker les données. Entre
+deux requêtes, les variables locales à une fonction python ne sont pas
+partagée et les variables globales sont perdues quand le serveur Flask
+est redémarré. Dans le cas présent, la base de données est configurée
+pour s'initialiser toute seule.
+
+**Les bases de données seront introduites dans une future session.**
+
+Le projet contient aussi une classe `Engineer` persistante:
+
 ```python
 class Engineer(db.Model):
     id = <int>
@@ -285,6 +293,11 @@ class Engineer(db.Model):
     def __repr__(self):
         return '<Engineer {}>'.format(self.username)
 ```
+
+Les instances de cette classe sont sauvegardées dans la base de
+données évoquée précédemment. Au démarrage du serveur Flask, les
+ingénieurs précédemment ajoutés seront présents.
+
 * Un fichier app.py qui s'occupe d'initialiser la base de données et qui propose:
   - une fonction `get_all_engineers` qui retourne une liste d'ingénieurs
   - une fonction `get_engineer_by_id` qui retourne un ingénieur en fonction de son identifiant
@@ -331,14 +344,14 @@ allons:
 - 3) créer une nouvelle fonction python dans le fichier `app.py`, qui reprendrait le code suivant:
 
 ```python
-@app.route('/engineer/<int:engineer_id>')
-def show_engineer(engineer_id):
+@app.route('/engineer/id/<int:engineer_id>')
+def show_engineer_by_id(engineer_id):
     engineer = get_engineer_by_id(engineer_id)
     return flask.render_template("show_engineer.html.jinja2",
                                  engineer=engineer)
 ```
 
-En visitant la page [http://127.0.0.1:5000/engineer/1](http://127.0.0.1:5000/engineer/1), le résultat suivant devrait être affiché:
+En visitant la page [http://127.0.0.1:5000/engineer/id/1](http://127.0.0.1:5000/engineer/id/1), le résultat suivant devrait être affiché:
 ![description d'un ingénieur](/assets/img/session4/engineer_description.png)
 
 
@@ -350,9 +363,9 @@ Pour la prochaine séance, nous vous demandons de codez une vue qui:
 
 Pour cela vous pourrez:
 - utiliser la fonction `get_engineers_in_site` qui a un site retourne les ingénieurs qui y sont affiliés
-- créer une template jinja `display_engineers_by.site.html.jinja2`
+- créer une template jinja `display_engineers_by_site.html.jinja2`
 - vous inspirer des templates vues en cours en utilisant un `for` et {% raw %}`{{ engineer.X }}`{% endraw %}
-- (bonus) vous pouvez afficher les ingénieurs sous forme de liste HTML en utilisant la structure:
+- Suggestion: vous pouvez afficher les ingénieurs sous forme de liste HTML en utilisant la structure:
 
 ```html
 <ul>
