@@ -8,22 +8,23 @@ order: 4
 {:toc}
 
 
-Cette session part du principe que vous avez fait la [session
-0](session0.html) : avant de démarrer cette session, assurez vous de
-bien avoir un environnement de développement Flask fonctionnel. Si ce
-n'est pas le cas, veuillez suivre les instructions de la [session
-0](session0.html) avant de poursuivre avec les instructions
-ci-dessous.
+Avant de démarrer cette session, assurez vous de bien avoir un
+environnement de développement Flask fonctionnel. Si ce n'est pas le
+cas, veuillez suivre les instructions de la [session 3](/session3_install.html)
+avant de poursuivre avec les instructions ci-dessous.
 
 
 # Une première application web simple, avec Flask
 
-Nous allons voir dans cette Section comment afficher un message dans le navigateur de l'utilisateur. Pour cela nous allons:
+Nous allons voir dans cette Section comment afficher un message dans le navigateur de l'utilisateur. 
 
-* Créer un nouveau projet Flask qui aura pour nom "FlaskTP1"
-* Coder une vue qui affichera le texte "Helloworld" quand l'utilisateur accèdera à l'URL [http://127.0.0.1:5000/greetings](http://127.0.0.1:5000/greetings)
+Tout d'abord commençons par créer un nouveau projet Flask qui aura
+pour nom "FlaskTP1" en suivant les instructions de la [session
+précédente](http://localhost:4000/session3_install.html#v%C3%A9rification-de-linstallation).
 
-Pour cela, éditez le fichier `app.py` généré par PyCharm de manière à ce qu'il contienne le code suivant:
+Nous allons maintenant coder une vue qui affichera le texte
+"Helloworld". Pour cela, éditez le fichier `app.py` généré par PyCharm
+de manière à ce qu'il contienne le code suivant:
 
 ```python
 @app.route('/greetings')
@@ -42,158 +43,6 @@ Nous pouvons faire les observations suivantes:
 * **Le nom donné à la fonction Python n'a pas d'importance**
 
 
-# Envoyer du HTML à l'utilisateur
-
-Dans cette sous-section nous allons voir comment renvoyer une réponse
-HTML à l'utilisateur. Nous verrons d'abord qu'il est tout d'abord
-possible de retourner une chaine de caractère contenant du HTML, mais
-que ceci a l'inconvénient d'être peu lisible et de mélanger
-difficilement HTML et Python. Nous verrons ensuite comment simplifier
-cette cohabitation en utilisant des fichiers **Templates** basés sur
-le moteur [Jinja2](http://jinja.pocoo.org/docs/2.10/).
-
-## Retourner du HTML brut : une mauvaise idée
-
-Nous pouvons faire une nouvelle vue, similaire à celle codée dans la
-Section précédente, mais qui cette fois retournera une chaine de
-caractère contenant du code HTML:
-
-```python
-@app.route('/greetings_with_html')
-def some_function_html():
-    return """
-<html>
-    <head>
-        <title>Hello!</title>
-    </head>
-    <body>
-        <b>Hello world!</b>
-    </body>
-</html>
-    """
-```
-
-Nous pouvons faire les observations suivantes:
-* La coloration synthaxique ne fonctionne pas pour le code HTML.
-* Le mélange python et HTML est peu lisible
-* Si notre application contient plusieurs fonctions suivant ce style
-  de programmation, le fichier `app.py` deviendra rapidement très
-  gros.
-  
-Une autre approche plus acceptable consiste à mettre le code HTML dans
-un fichier HTML séparé du code Python, et de demander à la fonction
-Python de servir le contenu de ce fichier HTML.
-
-## Simplification grâce aux templates Jinja2
-
-Flask utilise le moteur de template Jinja2
-
-Nous allons maintenant voir comment utiliser les templates pour
-générer des réponses utilisant du code HTML. Pour cela:
-
-* 1) créer un fichier `first_template.html` dans le dossier templates
-   (en violet dans PyCharm)
-* 2) y mettre le contenu suivant:
-
-```html
-<html>
-    <head>
-        <title>Hello!</title>
-    </head>
-    <body>
-        <b>Hello world!</b>
-    </body>
-</html>
-```
-- 3) créer une nouvelle fonction python dans le fichier `app.py`, qui reprendrait le code suivant:
-
-```python
-import flask # mettre cette ligne au debut de votre fichier Python
-
-# [...]
-
-@app.route('/greetings_with_html_and_template')
-def some_function_html_with_template():
-    return render_template("first_template.html")
-```
-
-Visiter la page [http://127.0.0.1:5000/greetings_with_html_and_template](http://127.0.0.1:5000/greetings_with_html_and_template), et constater que l'on obtient toujours le même affichage, tout en ayant:
-- une séparation plus claire entre le code Python et le code HTML
-- de la coloration synthaxique pour le code HTML
-
-L'approche actuelle permet de servir une page HTML statique aux
-utilisateurs. Nous verrons ensuite comment personnaliser cette page
-avec Python et Flask.
-
-
-
-## Une Template permet de générer du texte dynamiquement
-
-Dans la Section II-a, nous avons vu comment servir une page HTML
-statique. Le message affiché par cette page a toujours la même valeur,
-ce qui limite son interet. Nous allons voir maintenant comment prendre
-en compte des variables Python dans la réponse affichée à
-l'utilisateur.
-
-**L'objectif sera maintenant de prendre en compte des variables Python
-la génération de la réponse. Nous verrons nottament comment faire une
-boucle avec l'instruction `for` et comment faire une structure
-conditionnelle avec l'instruction `if/else`**
-
-Pour cela, nous allons:
-
-- 1) modifier la fonction `some_function_html_with_template` afin qu'elle contienne le code suivant:
-
-```python
-colors = ["red", "blue", "green", "purple", "dark", "white"]
-boolean_value = False
-msg_if_boolean_value = "[boolean_value is true]"
-msg_if_not_boolean_value = "[boolean_value is false]"
-```
-
-- 2) modifier l'appel à la fonction `render_template` afin qu'elle crée un contexte jinja2 qui contienne les variables Python précédemment crées:
-
-```python
-return render_template("first_template.html",
-                       colors_arg=colors,
-                       boolean_value_arg=boolean_value,
-                       msg_if_boolean_value_arg=msg_if_boolean_value,
-                       msg_if_not_boolean_value_arg=msg_if_not_boolean_value)
-```
-
-- 3) Modifier la template `templates/first_template.html` de manière à ce qu'elle affiche les variables passées à la fonction `render_template`:
-
-```jinja
-{% raw %}
-<html>
-    <head>
-        <title>Hello!</title>
-    </head>
-    <body>
-        {% for color in colors_arg %}
-            {{ color }}
-        {% endfor %}
-
-        {% if boolean_value_arg %}
-            {{ msg_if_boolean_value_arg }}
-        {% else %}
-            {{ msg_if_not_boolean_value_arg }}
-        {% endif %}
-    </body>
-</html>
-{% endraw %}
-```
-
-En visitant la page [http://127.0.0.1:5000/greetings_with_html_and_template](http://127.0.0.1:5000/greetings_with_html_and_template), vous obtiendez un résultat proche de:
-
-![capture d'écran montrant le programme d'installation de miniconda](/assets/img/session1/screen4.png)
-
-
-On peut voir que les valeurs des variables Python sont bien prises en
-compte pour former la réponse HTML : la réponse HTML sera adaptée au
-contenu des variables Python. De plus des structures de contrôle
-telles que les `if/else` et les `for/while` permettent de
-structure le code Jinja2.
 
 # Passer de l'information dans l'URL
 
@@ -202,15 +51,327 @@ l'utilisateur accède. Le code suivant définie une fonction qui prend 3
 paramètres, et affiche un calcul:
 
 ```python
-@app.route("/sum/<label>/<int:a>/<int:b>")
-def compute_sum(label, a, b):
+@app.route("/sum/<lang>/<int:a>/<int:b>")
+def compute_sum(lang, a, b):
     c = a + b
-    return label+" "+str(a)+" et "+str(b)+" est "+str(c)
+    if lang == "fr":
+        return "La somme de %d et %d est %d" % (a, b, c)
+    else:
+        return "The sum of %d and %d is %d" % (a, b, c)
 ```
 
-Quand on accède à l'URL [http://127.0.0.1:5000/sum/la somme de
-/3/5](http://127.0.0.1:5000/sum/la somme de /3/5), on obtient le
+Quand on accède à l'URL [http://127.0.0.1:5000/sum/en/3/5](http://127.0.0.1:5000/sum/en/3/5), on obtient le
 résultat suivant:
 
 ![capture d'écran montrant le programme d'installation de miniconda](/assets/img/session1/screen5.png)
 
+
+# Vers des vues structurées avec les templates
+
+Dans cette section nous verrons comment construire une réponse
+structurée. Dans un premier temps nous retournerons un texte généré en
+Python et transmis à Flask. Dans un second temps, nous verrons comment
+écrire la même chose en utilisant le moteur de template Jinja2.
+
+
+## Une vue construite naïvement en Python
+
+Prenons l'exemple suivant:
+
+```python
+import flask # mettre cette ligne en debut de fichier
+
+@app.route("/complex_view")
+def complex_view():
+    # variables
+    colors = ["red", "blue", "green", "purple", "dark", "white"]
+    boolean_value = False
+    msg_if_boolean_value = "[boolean_value is true]"
+    msg_if_not_boolean_value = "[boolean_value is false]"
+
+    # construction de la reponse
+    result = ""
+
+    for color in colors:
+        result += "* "
+        result += color
+        result += "\n"
+
+    if boolean_value:
+        result += msg_if_boolean_value
+    else:
+        result += msg_if_not_boolean_value
+
+    # envoie de la reponse sous forme textuelle
+    return flask.Response(result,
+                          mimetype="text")
+```
+
+En visitant l'URL
+[http://127.0.0.1:5000/complex_view_template](http://127.0.0.1:5000/complex_view_template),
+vous obtiendez ce resultat: ![capture d'écran montrant le result du
+premier programme avec une vue
+complexe](/assets/img/session4/complex_view.png)
+
+La fonction `complex_view` retourne une réponse textuelle construite
+avec deux structures de contrôle : un `for` et un `if`. Bien qu'étant
+fonctionnelle, cette fonction deviendrait difficilement lisible si le
+texte à ajouter devant une couleur était plus long.
+
+__De plus, en procédant de la sorte, le code la fonction Python
+contient la logique de la présentation, ce qui est en contradiction
+avec la séparation MVC.__
+
+## La même vue construite avec une template Jinja
+
+**L'objectif sera maintenant de coder l'exemple précédent, en
+s'appuyant sur des templates Jinja2 en prenant en compte des variables
+Python la génération de la réponse. Nous verrons nottament comment
+faire une boucle avec l'instruction `for` et comment faire une
+structure conditionnelle avec l'instruction `if/else`**
+
+Pour cela, nous allons:
+
+- 1) créer une nouvelle fonction `complex_view_template` qui contient le code suivant:
+
+```python
+@app.route("/complex_view_template")
+def complex_view_template():
+    colors = ["red", "blue", "green", "purple", "dark", "white"]
+    boolean_value = False
+    msg_if_boolean_value = "[boolean_value is true]"
+    msg_if_not_boolean_value = "[boolean_value is false]"
+
+    return flask.Response(flask.render_template("complex_view.jinja2",
+                                 colors=colors,
+                                 boolean_value=boolean_value,
+                                 msg_if_boolean_value=msg_if_boolean_value,
+                                 msg_if_not_boolean_value=msg_if_not_boolean_value),
+                          mimetype="text")
+```
+
+- 2) Créer un fichier `templates/complex_view.jinja2` de manière à ce qu'elle affiche les variables passées à la fonction `render_template`:
+
+{% raw %}
+```jinja
+{% for color in colors_arg %}
+    {{ color }}
+{% endfor %}
+
+{% if boolean_value_arg %}
+    {{ msg_if_boolean_value_arg }}
+{% else %}
+    {{ msg_if_not_boolean_value_arg }}
+{% endif %}
+```
+{% endraw %}
+
+En visitant la page [http://127.0.0.1:5000/complex_view_template](http://127.0.0.1:5000/complex_view_template), vous obtiendez un résultat proche de:
+
+![capture d'écran montrant le result du premier programme utilisant les templates](/assets/img/session4/complex_view_template.png)
+
+
+On peut faire les observations suivantes:
+- les valeurs des variables Python sont bien prises en compte pour
+  former la réponse HTML : la réponse HTML sera adaptée au contenu des
+  variables Python.
+- De plus des structures de contrôle telles que les
+  `if/else` et les `for/while` permettent de structure le code Jinja2.
+- **Des espaces sont ajoutés entre les lignes**
+
+**(Bonus)**
+
+Bien que les espaces en trop ne posant pas de soucis lors de la
+génération de code HTML, il pourrait en être autrement lors de la
+génération d'une réponse qui serait sensible aux espaces. Dans un tel
+cas, il est possible d'avoir un plus grand controle sur la gestion des
+espaces (c.f. [ce
+lien](http://jinja.pocoo.org/docs/2.10/templates/#whitespace-control)).
+
+Le code de template suivant permet d'avoir un résultat identique à
+celui de la fonction en python "pur':
+
+{% raw %}
+```jinja
+{% for color in colors -%}
+  * {{ color }}
+{% endfor %}
+
+{%- if boolean_value -%}
+    {{ msg_if_boolean_value }}
+{%- else -%}
+    {{ msg_if_not_boolean_value }}
+{% endif %}
+```
+{% endraw %}
+
+![capture d'écran montrant le result du premier programme utilisant les templates et gestion des espaces](/assets/img/session4/complex_view_template_1.png)
+
+# Envoyer du HTML à l'utilisateur
+
+Dans cette section nous allons voir comment renvoyer une réponse HTML
+à l'utilisateur en utilisant les templates Jinja.
+
+<!-- ## Retourner du HTML brut : une mauvaise idée -->
+
+<!-- Nous pouvons faire une nouvelle vue, similaire à celle codée dans la -->
+<!-- Section précédente, mais qui cette fois retournera une chaine de -->
+<!-- caractère contenant du code HTML: -->
+
+<!-- ```python -->
+<!-- @app.route('/engineer/no_templates/<int:engineer_id>') -->
+<!-- def show_engineer_without_templates(engineer_id): -->
+<!--     engineer = get_engineer_by_id(engineer_id) -->
+
+<!--     result = """<p>Information about \"""" -->
+<!--     result += engineer.username -->
+<!--     result += """\"</p> -->
+
+<!-- <dl> -->
+<!--     <dt>id</dt> -->
+<!--     <dd>""" -->
+<!--     result += str(engineer.id) -->
+<!--     result += """</dd> -->
+
+<!--     <dt>username</dt> -->
+<!--     <dd>""" -->
+<!--     result += engineer.username -->
+<!--     result += """</dd> -->
+
+<!--     <dt>email</dt> -->
+<!--     <dd>""" -->
+<!--     result += engineer.email -->
+<!--     result += """"</dd> -->
+
+<!--     <dt>site</dt> -->
+<!--     <dd>""" -->
+<!--     result += engineer.site -->
+<!--     result += """"</dd> -->
+<!-- </dl>""" -->
+
+<!--     return result -->
+<!-- ``` -->
+
+<!-- Nous pouvons faire les observations suivantes: -->
+<!-- * La coloration synthaxique ne fonctionne pas pour le code HTML. -->
+<!-- * Le mélange python et HTML est peu lisible -->
+<!-- * Si notre application contient plusieurs fonctions suivant ce style -->
+<!--   de programmation, le fichier `app.py` deviendra rapidement très -->
+<!--   gros. -->
+  
+<!-- <\!-- Une autre approche plus acceptable consiste à mettre le code HTML dans -\-> -->
+<!-- <\!-- un fichier HTML séparé du code Python, et de demander à la fonction -\-> -->
+<!-- <\!-- Python de servir le contenu de ce fichier HTML. -\-> -->
+
+<!-- Nous pouvons constater que le précédent exemple, bien qu'étant simple, -->
+<!-- est difficilement lisible. Nous verrons dans la sous-section suivante -->
+<!-- comment faire mieux. -->
+
+<!-- Flask utilise le moteur de template Jinja2 -->
+
+Tout d'abord récupérer une archive de code
+[session_4_engineer_view.zip](https://github.com/badock/FlaskSar2019ExampleApp/archive/session_4_engineer_view.zip)
+contenant un projet qui servira de base pour cet exercice. 
+
+Ce TP contient Une base de données pour stocker les données. Entre
+deux requêtes, les variables locales à une fonction python ne sont pas
+partagée et les variables globales sont perdues quand le serveur Flask
+est redémarré. Dans le cas présent, la base de données est configurée
+pour s'initialiser toute seule.
+
+**Les bases de données seront introduites dans une future session.**
+
+Le projet contient aussi une classe `Engineer` persistante:
+
+```python
+class Engineer(db.Model):
+    id = <int>
+    username = <string>
+    email = <string>
+    site = <string>
+
+    def __repr__(self):
+        return '<Engineer {}>'.format(self.username)
+```
+
+Cette classe hérite de `db.Model`, ce qui permet de stocker les
+instances de cette classe dans la base de données évoquée
+précédemment. Au démarrage du serveur Flask, les ingénieurs
+précédemment ajoutés seront présents.
+
+Ce projet contient aussi un fichier app.py qui s'occupe d'initialiser la base de données et qui propose:
+  - une fonction `get_all_engineers` qui retourne une liste d'ingénieurs
+  - une fonction `get_engineer_by_id` qui retourne un ingénieur en fonction de son identifiant
+  - une fonction `get_engineers_in_site` qui retourne les ingénieurs présent sur un site passé en paramètre
+  - une vue `index` affichant les ingénieurs présents dans la base de données
+  - une vue `show_engineer` qu'il faudra coder dans cet exercice
+
+
+__Nous allons maintenant coder une vue qui affichera la description d'un
+ingénieur en prenant en entrée son identifiant__. Pour cela, nous
+allons:
+
+* 1) créer un fichier `first_template.html` dans le dossier templates
+   (en violet dans PyCharm)
+* 2) y mettre le contenu suivant:
+
+{% raw %}
+```html
+<html>
+    <head>
+        <title>Description de {{ engineer.username }}</title>
+    </head>
+    <body>
+        <p>Information about "{{ engineer.username }}"</p>
+    
+        <dl>
+            <dt>id</dt>
+            <dd>{{ engineer.id }}</dd>
+        
+            <dt>username</dt>
+            <dd>{{ engineer.username }}</dd>
+        
+            <dt>email</dt>
+            <dd>{{ engineer.email }}</dd>
+        
+            <dt>site</dt>
+            <dd>{{ engineer.site }}</dd>
+        </dl>
+    </body>
+</html>
+```
+{% endraw %}
+
+- 3) créer une nouvelle fonction python dans le fichier `app.py`, qui reprendrait le code suivant:
+
+```python
+@app.route('/engineer/id/<int:engineer_id>')
+def show_engineer_by_id(engineer_id):
+    engineer = get_engineer_by_id(engineer_id)
+    return flask.render_template("show_engineer.html.jinja2",
+                                 engineer=engineer)
+```
+
+En visitant la page [http://127.0.0.1:5000/engineer/id/1](http://127.0.0.1:5000/engineer/id/1), le résultat suivant devrait être affiché:
+![description d'un ingénieur](/assets/img/session4/engineer_description.png)
+
+
+# Exercice
+
+Pour la prochaine séance, nous vous demandons de codez une vue qui:
+- prendra en paramètre le nom d'un site (brest, nantes, ...)
+- affichera les ingénieurs affiliés à ce site
+
+Pour cela vous pourrez:
+- utiliser la fonction `get_engineers_in_site` qui a un site retourne les ingénieurs qui y sont affiliés
+- créer une template jinja `display_engineers_by_site.html.jinja2`
+- vous inspirer des templates vues en cours en utilisant un `for` et {% raw %}`{{ engineer.X }}`{% endraw %}
+- Suggestion: vous pouvez afficher les ingénieurs sous forme de liste HTML en utilisant la structure:
+
+```html
+<ul>
+    <li>ingenieur A</li>
+    <li>ingenieur B</li>
+    <li>ingenieur C</li>
+</ul>
+```
