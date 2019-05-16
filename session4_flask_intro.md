@@ -205,76 +205,97 @@ celui de la fonction en python "pur':
 
 # Envoyer du HTML à l'utilisateur
 
-Dans cette sous-section nous allons voir comment renvoyer une réponse
-HTML à l'utilisateur. Nous verrons d'abord qu'il est tout d'abord
-possible de retourner une chaine de caractère contenant du HTML, mais
-que ceci a l'inconvénient d'être peu lisible et de mélanger
-difficilement HTML et Python. Nous verrons ensuite comment simplifier
-cette cohabitation en utilisant des fichiers **Templates** basés sur
-le moteur [Jinja2](http://jinja.pocoo.org/docs/2.10/).
+Dans cette section nous allons voir comment renvoyer une réponse HTML
+à l'utilisateur en utilisant les templates Jinja.
 
-## Retourner du HTML brut : une mauvaise idée
+<!-- ## Retourner du HTML brut : une mauvaise idée -->
 
-Nous pouvons faire une nouvelle vue, similaire à celle codée dans la
-Section précédente, mais qui cette fois retournera une chaine de
-caractère contenant du code HTML:
+<!-- Nous pouvons faire une nouvelle vue, similaire à celle codée dans la -->
+<!-- Section précédente, mais qui cette fois retournera une chaine de -->
+<!-- caractère contenant du code HTML: -->
 
-```python
-@app.route('/engineer/no_templates/<int:engineer_id>')
-def show_engineer_without_templates(engineer_id):
-    engineer = get_engineer_by_id(engineer_id)
+<!-- ```python -->
+<!-- @app.route('/engineer/no_templates/<int:engineer_id>') -->
+<!-- def show_engineer_without_templates(engineer_id): -->
+<!--     engineer = get_engineer_by_id(engineer_id) -->
 
-    result = """<p>Information about \""""
-    result += engineer.username
-    result += """\"</p>
+<!--     result = """<p>Information about \"""" -->
+<!--     result += engineer.username -->
+<!--     result += """\"</p> -->
 
-<dl>
-    <dt>id</dt>
-    <dd>"""
-    result += str(engineer.id)
-    result += """</dd>
+<!-- <dl> -->
+<!--     <dt>id</dt> -->
+<!--     <dd>""" -->
+<!--     result += str(engineer.id) -->
+<!--     result += """</dd> -->
 
-    <dt>username</dt>
-    <dd>"""
-    result += engineer.username
-    result += """</dd>
+<!--     <dt>username</dt> -->
+<!--     <dd>""" -->
+<!--     result += engineer.username -->
+<!--     result += """</dd> -->
 
-    <dt>email</dt>
-    <dd>"""
-    result += engineer.email
-    result += """"</dd>
+<!--     <dt>email</dt> -->
+<!--     <dd>""" -->
+<!--     result += engineer.email -->
+<!--     result += """"</dd> -->
 
-    <dt>site</dt>
-    <dd>"""
-    result += engineer.site
-    result += """"</dd>
-</dl>"""
+<!--     <dt>site</dt> -->
+<!--     <dd>""" -->
+<!--     result += engineer.site -->
+<!--     result += """"</dd> -->
+<!-- </dl>""" -->
 
-    return result
-```
+<!--     return result -->
+<!-- ``` -->
 
-Nous pouvons faire les observations suivantes:
-* La coloration synthaxique ne fonctionne pas pour le code HTML.
-* Le mélange python et HTML est peu lisible
-* Si notre application contient plusieurs fonctions suivant ce style
-  de programmation, le fichier `app.py` deviendra rapidement très
-  gros.
+<!-- Nous pouvons faire les observations suivantes: -->
+<!-- * La coloration synthaxique ne fonctionne pas pour le code HTML. -->
+<!-- * Le mélange python et HTML est peu lisible -->
+<!-- * Si notre application contient plusieurs fonctions suivant ce style -->
+<!--   de programmation, le fichier `app.py` deviendra rapidement très -->
+<!--   gros. -->
   
-<!-- Une autre approche plus acceptable consiste à mettre le code HTML dans -->
-<!-- un fichier HTML séparé du code Python, et de demander à la fonction -->
-<!-- Python de servir le contenu de ce fichier HTML. -->
+<!-- <\!-- Une autre approche plus acceptable consiste à mettre le code HTML dans -\-> -->
+<!-- <\!-- un fichier HTML séparé du code Python, et de demander à la fonction -\-> -->
+<!-- <\!-- Python de servir le contenu de ce fichier HTML. -\-> -->
 
-Nous pouvons constater que le précédent exemple, bien qu'étant simple,
-est difficilement lisible. Nous verrons dans la sous-section suivante
-comment faire mieux.
+<!-- Nous pouvons constater que le précédent exemple, bien qu'étant simple, -->
+<!-- est difficilement lisible. Nous verrons dans la sous-section suivante -->
+<!-- comment faire mieux. -->
 
 
 ## Simplification de la génération de HTML via les templates
 
-Flask utilise le moteur de template Jinja2
+<!-- Flask utilise le moteur de template Jinja2 -->
 
-Nous allons maintenant voir comment utiliser les templates pour
-générer des réponses utilisant du code HTML. Pour cela:
+Tout d'abord récupérer une archive de code
+[session_4_engineer_view.zip](https://github.com/badock/FlaskSar2019ExampleApp/archive/session_4_engineer_view.zip)
+contenant un projet qui servira de base pour cet exercice. Ce TP
+contient:
+* une base de données qui s'initialisera toute seule : les bases de
+  données seront introduites dans une future session.
+* Une classe ingénieur persistante:
+```python
+class Engineer(db.Model):
+    id = <int>
+    username = <string>
+    email = <string>
+    site = <string>
+
+    def __repr__(self):
+        return '<Engineer {}>'.format(self.username)
+```
+* Un fichier app.py qui s'occupe d'initialiser la base de données et qui propose:
+  - une fonction `get_all_engineers` qui retourne une liste d'ingénieurs
+  - une fonction `get_engineer_by_id` qui retourne un ingénieur en fonction de son identifiant
+  - une fonction `get_engineers_in_site` qui retourne les ingénieurs présent sur un site passé en paramètre
+  - une vue `index` affichant les ingénieurs présents dans la base de données
+  - une vue `show_engineer` qu'il faudra coder dans cet exercice
+
+
+__Nous allons maintenant coder une vue qui affichera la description d'un
+ingénieur en prenant en entrée son identifiant__. Pour cela, nous
+allons:
 
 * 1) créer un fichier `first_template.html` dans le dossier templates
    (en violet dans PyCharm)
@@ -282,21 +303,28 @@ générer des réponses utilisant du code HTML. Pour cela:
 
 {% raw %}
 ```html
-<p>Information about "{{ engineer.username }}"</p>
-
-<dl>
-    <dt>id</dt>
-    <dd>{{ engineer.id }}</dd>
-
-    <dt>username</dt>
-    <dd>{{ engineer.username }}</dd>
-
-    <dt>email</dt>
-    <dd>{{ engineer.email }}</dd>
-
-    <dt>site</dt>
-    <dd>{{ engineer.site }}</dd>
-</dl>
+<html>
+    <head>
+        <title>Description de {{ engineer.username }}</title>
+    </head>
+    <body>
+        <p>Information about "{{ engineer.username }}"</p>
+    
+        <dl>
+            <dt>id</dt>
+            <dd>{{ engineer.id }}</dd>
+        
+            <dt>username</dt>
+            <dd>{{ engineer.username }}</dd>
+        
+            <dt>email</dt>
+            <dd>{{ engineer.email }}</dd>
+        
+            <dt>site</dt>
+            <dd>{{ engineer.site }}</dd>
+        </dl>
+    </body>
+</html>
 ```
 {% endraw %}
 
@@ -310,6 +338,5 @@ def show_engineer(engineer_id):
                                  engineer=engineer)
 ```
 
-Visiter la page [http://127.0.0.1:5000/engineer/1](http://127.0.0.1:5000/engineer/1), et constater que l'on obtient toujours le même affichage, tout en ayant:
-- une séparation plus claire entre le code Python et le code HTML
-- de la coloration synthaxique pour le code HTML
+En visitant la page [http://127.0.0.1:5000/engineer/1](http://127.0.0.1:5000/engineer/1), le résultat suivant devrait être affiché:
+![description d'un ingénieur](/assets/img/session4/engineer_description.png)
