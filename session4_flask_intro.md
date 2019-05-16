@@ -299,7 +299,7 @@ instances de cette classe dans la base de données évoquée
 précédemment. Au démarrage du serveur Flask, les ingénieurs
 précédemment ajoutés seront présents.
 
-* Un fichier app.py qui s'occupe d'initialiser la base de données et qui propose:
+Ce projet contient aussi un fichier app.py qui s'occupe d'initialiser la base de données et qui propose:
   - une fonction `get_all_engineers` qui retourne une liste d'ingénieurs
   - une fonction `get_engineer_by_id` qui retourne un ingénieur en fonction de son identifiant
   - une fonction `get_engineers_in_site` qui retourne les ingénieurs présent sur un site passé en paramètre
