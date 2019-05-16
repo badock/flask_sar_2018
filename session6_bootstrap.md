@@ -1,5 +1,5 @@
 ---
-title: Session 6 - CSS avancé avec Bootstrap
+title: Session 6 - Mise en forme avancée avec Bootstrap
 excerpt: ""
 order: 6
 ---
