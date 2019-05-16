@@ -340,3 +340,24 @@ def show_engineer(engineer_id):
 
 En visitant la page [http://127.0.0.1:5000/engineer/1](http://127.0.0.1:5000/engineer/1), le résultat suivant devrait être affiché:
 ![description d'un ingénieur](/assets/img/session4/engineer_description.png)
+
+
+# Exercice
+
+Pour la prochaine séance, nous vous demandons de codez une vue qui:
+- prendra en paramètre le nom d'un site (brest, nantes, ...)
+- affichera les ingénieurs affiliés à ce site
+
+Pour cela vous pourrez:
+- utiliser la fonction `get_engineers_in_site` qui a un site retourne les ingénieurs qui y sont affiliés
+- créer une template jinja `display_engineers_by.site.html.jinja2`
+- vous inspirer des templates vues en cours en utilisant un `for` et {% raw %}`{{ engineer.X }}`{% endraw %}
+- (bonus) vous pouvez afficher les ingénieurs sous forme de liste HTML en utilisant la structure:
+
+```html
+<ul>
+    <li>ingenieur A</li>
+    <li>ingenieur B</li>
+    <li>ingenieur C</li>
+</ul>
+```
