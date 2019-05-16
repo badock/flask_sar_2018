@@ -12,7 +12,7 @@ est décrit dans un fichier HTML (pour Hypertext Markup Language). Ce
 fichier décrit aussi l'organisation logique du contenu (qu'est-ce qui est
 un titre, qu'est-ce qui est un menu, une section, une liste, etc.). La façon
 dont ce contenu est affiché (emplacement, taille, couleur, etc. de chaque
-élément) est décrit dans un ou plusieurs fichiers de style CSS (pour
+élément) est décrite dans un ou plusieurs fichiers de style CSS (pour
 Cascading Style Sheets).
 
 Ces deux éléments suffisent à décrire une page web dite "statique" (dont
@@ -20,7 +20,7 @@ le contenu ne change pas). Cependant, de nos jours la plupart des pages web
 que nous consultons sont "dynamiques" (leur contenu ou la façon dont il est
 affiché varie au cours du temps et/ou en fonction des actions de
 l'utilisateur). De bons exemples de pages web dynamiques sont une messagerie
-instantannée ou un réseau social (les interactions telles qu'envoyer un
+instantanée ou un réseau social (les interactions telles qu'envoyer un
 message, commenter ou réagir à une publication ou charger plus de contenu
 une fois arrivé à la fin du contenu déjà chargé ne demandent pas de changer
 de page). Ceci est fait grâce à un langage de programmation interprétable
@@ -41,7 +41,7 @@ dernière version du HTML, le HTML 5.
 
 Un élément peut être du texte ou une balise (vide ou non-vide). Les
 balises peuvent avoir des attributs (par exemple l'URL de l'image voulue
-pour une balise image). Les balises non-vides peuvent elles-même contenir
+pour une balise image). Les balises non-vides peuvent elles-mêmes contenir
 des éléments (textes et/ou balises). Voici un exemple minimal que nous
 allons analyser :
 
@@ -92,7 +92,7 @@ terminé par `-->`).
 
 ## Description du contenu
 
-Pour le remplissement du contenu de la page, le plus simple est d'étudier
+Pour le remplissage du contenu de la page, le plus simple est d'étudier
 un autre exemple. Le code suivant est un exemple de contenu pour la balise
 `<body>`. Une version éditable avec aperçu pour l'expérimentation est
 disponible ici :
@@ -134,7 +134,7 @@ disponible ici :
   Les listes
 </h2>
 <p>
-  Les listes peuvent être ordonnées (les éléments sont alors numérottés) ou non-ordonnées (les
+  Les listes peuvent être ordonnées (les éléments sont alors numérotés) ou non-ordonnées (les
   éléments sont en général précédés d'un tiret ou d'une bulle).
 </p>
 <h3>
@@ -202,7 +202,7 @@ indispensable de remplir un champ, s'il doit contenir une adresse
 e-mail ou une date valide, si c'est un mot de passe qu'il faut donc
 cacher, etc.). Cela permet au navigateur de proposer une méthode
 d'entrée adaptée (par exemple un calendrier pour une date) et d'éviter
-la soumission du formulaire si son contenu serait de toute façon rejeté.
+la soumission du formulaire si son contenu était de toute façon rejeté.
 
 À la soumission, les valeurs entrées par l'utilisateur sont envoyées au
 serveur à une URL précisée dans l'attribut "action" de la balise de
@@ -304,7 +304,7 @@ sélecteur {
 }
 ```
 
-Le sélecteur désigne quels éléments seront affectés par la règles,
+Le sélecteur désigne quels éléments seront affectés par la règle,
 tandis que les attributs et leur valeur définissent le style à appliquer.
 
 Dans un premier temps nous nous limiterons à trois types de sélecteurs  CSS :
@@ -316,13 +316,13 @@ Dans un premier temps nous nous limiterons à trois types de sélecteurs  CSS :
 
 Une règle de balise porte sur toutes les balises d'un type précis. Le
 sélecteur est alors simplement le type de balise à cibler. Dans
-l'exemple suiviant, nous imitons une application de messagerie instantanée
+l'exemple suivant, nous imitons une application de messagerie instantanée
 en séparant les paragraphes les uns des autres de 26 pixels, et nous
 donnons au texte des paragraphes (entourés d'une balise `<span>`) un fond
 gris clair arrondi de 16 pixels, avec une marge interne (distance entre le
 bord de la couleur de fond et le texte) de 12 pixels. De plus, nous demandons
 au navigateur d'essayer plusieurs polices dans l'ordre donné (selon les
-systèmes d'exploitation tout le monde n'a pas les mêmes polices installées).
+systèmes d'exploitation, tout le monde n'a pas les mêmes polices installées).
 
 Exemple interactif : [http://tiny.cc/SARcss1](http://tiny.cc/SARcss1)
 
@@ -486,7 +486,7 @@ Pour cela, nous complétons l'exemple vu précédemment par un
 formulaire de soumission de message. On indique au formulaire
 via son attribut "onsubmit" qu'il faut exécuter une fonction
 Javascript à la soumission du formulaire. Cette fonction se charge
-de vérifier que le message entré n'est pas vide (si c'est le cas
+de vérifier que le message entré n'est pas vide (si c'est le cas,
 elle affiche un pop-up d'avertissement), ajoute le message dans
 la page HTML et vide le champ de texte.
 

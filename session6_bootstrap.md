@@ -11,7 +11,7 @@ problèmes se posent. Par exemple, comment rendre le site consultable
 sur des écrans de différentes tailles (ordinateurs, tablettes,
 téléphones) ?
 
-Un autre problème important pour les dévelopeurs web est le fait que
+Un autre problème important pour les développeurs web est le fait que
 des navigateurs différents interprètent le HTML et le CSS de manières
 différentes. Cela est dû à des standards incomplets ou à l'utilisation
 de fonctions expérimentales. Bien que les choses se soient beaucoup
@@ -21,13 +21,13 @@ standards du web (notamment dans les pays émergents et dans les
 entreprises). Développer un site qui se comporte de la manière attendue
 chez tous les utilisateurs devient alors une tâche complexe et longue.
 
-Pour aténuer en grande partie ce problème, des frameworks tels que
+Pour atténuer en grande partie ce problème, des frameworks tels que
 Bootstrap proposent aux développeurs des composants déjà optimisés pour
 un maximum de navigateurs couvrant les cas d'utilisation les plus
 courants. Des thèmes sont par ailleurs proposés de sorte que notre site
 soit stylisé par défaut (boutons, menus, liens, tableaux, etc.).
 Nous allons voir dans cette session comment baser une application
-web sur le framework bootstrap pour fournir de manière portable un site
+web sur le framework Bootstrap pour fournir de manière portable un site
 bien présenté et "responsive" (qui s'adapte aux différentes tailles
 d'écran).
 
@@ -95,8 +95,8 @@ comprendre comment ces outils fonctionnent et comment les
 compléter si besoin, nous allons voir dans cette section
 comment fonctionnent les media queries.
 
-Les media queries sont une fonctionalité de CSS qui permet
-de n'appliquer une ou plusieures règles CSS seulement si
+Les media queries sont une fonctionnalité de CSS qui permet
+de n'appliquer une ou plusieurs règles CSS seulement si
 l'espace dédié à l'affichage de la page sur le terminal de
 l'utilisateur (écran de téléphone, fenêtre de navigateur
 sur ordinateur) possède certaines propriétés. La propriété
@@ -135,7 +135,7 @@ portent sur les mêmes éléments).
 Dans la version suivante de l'exemple interactif, deux media
 querries font que l'affichage est à une colonne jusqu'à 600
 pixels de large, deux colonnes de 600 à 1200 pixels, et
-quatre colonnes au delà de 1200 pixels :
+quatre colonnes au-delà de 1200 pixels :
 [http://tiny.cc/SARfbr](http://tiny.cc/SARfbr)
 
 
@@ -163,7 +163,7 @@ moyens 6 colonnes (la moitié) et sur les grands écrans 3
 colonnes (le quart).
 
 Pour cela, nous allons utiliser les tailles d'écran
-prédéfinies dans bootstrap :
+prédéfinies dans Bootstrap :
 * xs : ≥ 0px
 * sm : ≥ 576px
 * md : ≥ 768px
@@ -205,7 +205,7 @@ comme ceci :
 ```
 
 Nous n'avons donc plus besoin de CSS pour gérer la
-tailles des éléments, donc plus besoin non plus de
+taille des éléments, donc plus besoin non plus de
 media querries !
 
 Exemple interactif :
@@ -216,8 +216,8 @@ ne couvrons pas ici, telles que l'alignement vertical
 des éléments dans une ligne (si un élément de la ligne
 est plus haut que les autres), l'alignement et
 l'espacement horizontal des éléments dans une ligne
-(si ils ne remplissement pas les 12 colonnes),
-l'embriquement de grilles etc. Pour en savoir plus :
+(s'ils ne remplissent pas les 12 colonnes),
+l'imbriquement de grilles etc. Pour en savoir plus :
 [https://getbootstrap.com/docs/4.0/layout/grid/](https://getbootstrap.com/docs/4.0/layout/grid/)
 
 
@@ -229,7 +229,7 @@ Bootstrap fournit un ensemble de classes à donner
 à des éléments HTML existants pour leur donner une
 apparence bien plus élégante que leur version par
 défaut. Utilisées sur tous les éléments d'une page,
-ils permettent aussi d'obtenir une bonne cohérence
+elles permettent aussi d'obtenir une bonne cohérence
 visuelle très simplement.
 
 Un exemple est la classe "table" à donner à une

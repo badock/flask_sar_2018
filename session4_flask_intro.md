@@ -8,7 +8,7 @@ order: 4
 {:toc}
 
 
-Avant de démarrer cette session, assurez vous de bien avoir un
+Avant de démarrer cette session, assurez-vous de bien avoir un
 environnement de développement Flask fonctionnel. Si ce n'est pas le
 cas, veuillez suivre les instructions de la [session 3](/session3_install.html)
 avant de poursuivre avec les instructions ci-dessous.
@@ -18,7 +18,7 @@ avant de poursuivre avec les instructions ci-dessous.
 
 Nous allons voir dans cette Section comment afficher un message dans le navigateur de l'utilisateur. 
 
-Tout d'abord commençons par créer un nouveau projet Flask qui aura
+Tout d'abord, créer un nouveau projet Flask qui aura
 pour nom "FlaskTP1" en suivant les instructions de la [session
 précédente](http://localhost:4000/session3_install.html#v%C3%A9rification-de-linstallation).
 
@@ -39,7 +39,7 @@ Lancer l'application Flask, et accéder à cette vue via l'URL [http://127.0.0.1
 Nous pouvons faire les observations suivantes:
 
 * L'URL à entrer dans le navigateur est définie par la valeur passée à `@app.route`
-* Le résultat de l'execution de la fonction est envoyé au navigateur
+* Le résultat de l'exécution de la fonction est envoyé au navigateur
 * **Le nom donné à la fonction Python n'a pas d'importance**
 
 
@@ -47,7 +47,7 @@ Nous pouvons faire les observations suivantes:
 # Passer de l'information dans l'URL
 
 Il est possible de récupérer des informations contenues dans l'URL que
-l'utilisateur accède. Le code suivant définie une fonction qui prend 3
+l'utilisateur accède. Le code suivant définit une fonction qui prend 3
 paramètres, et affiche un calcul:
 
 ```python
@@ -126,7 +126,7 @@ avec la séparation MVC.__
 
 **L'objectif sera maintenant de coder l'exemple précédent, en
 s'appuyant sur des templates Jinja2 en prenant en compte des variables
-Python la génération de la réponse. Nous verrons nottament comment
+Python la génération de la réponse. Nous verrons notamment comment
 faire une boucle avec l'instruction `for` et comment faire une
 structure conditionnelle avec l'instruction `if/else`**
 
@@ -168,7 +168,7 @@ def complex_view_template():
 
 En visitant la page [http://127.0.0.1:5000/complex_view_template](http://127.0.0.1:5000/complex_view_template), vous obtiendez un résultat proche de:
 
-![capture d'écran montrant le result du premier programme utilisant les templates](/assets/img/session4/complex_view_template.png)
+![capture d'écran montrant le resultat du premier programme utilisant les templates](/assets/img/session4/complex_view_template.png)
 
 
 On peut faire les observations suivantes:
@@ -184,7 +184,7 @@ On peut faire les observations suivantes:
 Bien que les espaces en trop ne posant pas de soucis lors de la
 génération de code HTML, il pourrait en être autrement lors de la
 génération d'une réponse qui serait sensible aux espaces. Dans un tel
-cas, il est possible d'avoir un plus grand controle sur la gestion des
+cas, il est possible d'avoir un plus grand contrôle sur la gestion des
 espaces (c.f. [ce
 lien](http://jinja.pocoo.org/docs/2.10/templates/#whitespace-control)).
 
@@ -205,77 +205,21 @@ celui de la fonction en python "pur':
 ```
 {% endraw %}
 
-![capture d'écran montrant le result du premier programme utilisant les templates et gestion des espaces](/assets/img/session4/complex_view_template_1.png)
+![capture d'écran montrant le resultat du premier programme utilisant les templates et gestion des espaces](/assets/img/session4/complex_view_template_1.png)
 
 # Envoyer du HTML à l'utilisateur
 
 Dans cette section nous allons voir comment renvoyer une réponse HTML
 à l'utilisateur en utilisant les templates Jinja.
 
-<!-- ## Retourner du HTML brut : une mauvaise idée -->
 
-<!-- Nous pouvons faire une nouvelle vue, similaire à celle codée dans la -->
-<!-- Section précédente, mais qui cette fois retournera une chaine de -->
-<!-- caractère contenant du code HTML: -->
-
-<!-- ```python -->
-<!-- @app.route('/engineer/no_templates/<int:engineer_id>') -->
-<!-- def show_engineer_without_templates(engineer_id): -->
-<!--     engineer = get_engineer_by_id(engineer_id) -->
-
-<!--     result = """<p>Information about \"""" -->
-<!--     result += engineer.username -->
-<!--     result += """\"</p> -->
-
-<!-- <dl> -->
-<!--     <dt>id</dt> -->
-<!--     <dd>""" -->
-<!--     result += str(engineer.id) -->
-<!--     result += """</dd> -->
-
-<!--     <dt>username</dt> -->
-<!--     <dd>""" -->
-<!--     result += engineer.username -->
-<!--     result += """</dd> -->
-
-<!--     <dt>email</dt> -->
-<!--     <dd>""" -->
-<!--     result += engineer.email -->
-<!--     result += """"</dd> -->
-
-<!--     <dt>site</dt> -->
-<!--     <dd>""" -->
-<!--     result += engineer.site -->
-<!--     result += """"</dd> -->
-<!-- </dl>""" -->
-
-<!--     return result -->
-<!-- ``` -->
-
-<!-- Nous pouvons faire les observations suivantes: -->
-<!-- * La coloration synthaxique ne fonctionne pas pour le code HTML. -->
-<!-- * Le mélange python et HTML est peu lisible -->
-<!-- * Si notre application contient plusieurs fonctions suivant ce style -->
-<!--   de programmation, le fichier `app.py` deviendra rapidement très -->
-<!--   gros. -->
-  
-<!-- <\!-- Une autre approche plus acceptable consiste à mettre le code HTML dans -\-> -->
-<!-- <\!-- un fichier HTML séparé du code Python, et de demander à la fonction -\-> -->
-<!-- <\!-- Python de servir le contenu de ce fichier HTML. -\-> -->
-
-<!-- Nous pouvons constater que le précédent exemple, bien qu'étant simple, -->
-<!-- est difficilement lisible. Nous verrons dans la sous-section suivante -->
-<!-- comment faire mieux. -->
-
-<!-- Flask utilise le moteur de template Jinja2 -->
-
-Tout d'abord récupérer une archive de code
+Tout d'abord, récupérer une archive de code
 [session_4_engineer_view.zip](https://github.com/badock/FlaskSar2019ExampleApp/archive/session_4_engineer_view.zip)
 contenant un projet qui servira de base pour cet exercice. 
 
-Ce TP contient Une base de données pour stocker les données. Entre
+Ce TP contient une base de données pour stocker les données. Entre
 deux requêtes, les variables locales à une fonction python ne sont pas
-partagée et les variables globales sont perdues quand le serveur Flask
+partagées et les variables globales seront perdues quand le serveur Flask
 est redémarré. Dans le cas présent, la base de données est configurée
 pour s'initialiser toute seule.
 
@@ -302,7 +246,7 @@ précédemment ajoutés seront présents.
 Ce projet contient aussi un fichier app.py qui s'occupe d'initialiser la base de données et qui propose:
   - une fonction `get_all_engineers` qui retourne une liste d'ingénieurs
   - une fonction `get_engineer_by_id` qui retourne un ingénieur en fonction de son identifiant
-  - une fonction `get_engineers_in_site` qui retourne les ingénieurs présent sur un site passé en paramètre
+  - une fonction `get_engineers_in_site` qui retourne les ingénieurs présents sur un site passé en paramètre
   - une vue `index` affichant les ingénieurs présents dans la base de données
   - une vue `show_engineer` qu'il faudra coder dans cet exercice
 

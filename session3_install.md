@@ -8,7 +8,7 @@ order: 3
 {:toc}
 
 
-Dans le cas où vous ne disposiez pas déjà d'un environnement de
+Dans le cas où vous ne disposeriez pas déjà d'un environnement de
 développement Python, nous en installerons un dans cette session en utilisant le logiciel
 [*miniconda*](https://docs.conda.io/en/latest/miniconda.html) pour
 configurer rapidement un tel environnement. Si vous disposez déjà d'un
@@ -21,7 +21,7 @@ environnement Python fonctionnel, vous pouvez sauter cette étape.
 
 Avec votre navigateur, visitez [https://docs.conda.io/en/latest/miniconda.html](https://docs.conda.io/en/latest/miniconda.html) pour télécharger le programme d'installation qui correspond à votre configuration. Faites attention à choisir __Python 3.7__.
 
-Il faut exécuter le programme d'installation sur votre machine. Au cours de l'installation, utilisez les paramètres par défaut. **Il est possible que le programme d'installation vous demande d'entrer un mot de passe administrateur. Dans ce cas entrez le mot de passe de votre compte.**
+Il faut exécuter le programme d'installation sur votre machine. Au cours de l'installation, utilisez les paramètres par défaut. **Il est possible que le programme d'installation vous demande d'entrer un mot de passe administrateur. Dans ce cas, entrez le mot de passe de votre compte.**
 
 ![capture d'écran montrant le programme d'installation de miniconda](/assets/img/session0/screen2.png)
 
@@ -47,7 +47,7 @@ Une fois l'installation terminée avec succès, lancez "PyCharm". Vous devriez v
 
 ## Vérification de l'installation
 
-Pour vérifier que "PyCharm" et "Miniconda" sont bien intégrés, nous allons créer un projet basique. Sur l'écran d'accueil de "PyCharm", cliquez sur *create new project*:
+Pour vérifier que l'installation de "PyCharm" et "Miniconda" est fonctionnelle, nous allons créer un projet basique. Sur l'écran d'accueil de "PyCharm", cliquez sur *create new project*:
 
 ![capture d'écran montrant le programme d'installation de miniconda](/assets/img/session0/screen13.png)
 
@@ -55,16 +55,16 @@ Un écran vous demandant des renseignements sur le projet apparaitra:
 
 ![capture d'écran montrant le programme d'installation de miniconda](/assets/img/session0/screen9.png)
 
-Faites les actions suivantes:
+Appliquez les actions suivantes:
 1. Sélectionnez **Flask** comme type de projet
 2. Entrez un nom de projet (*FlaskExample*)
-3. Si besoin, déplier le menu **Project Interpreter**
+3. Si nécessaire, dépliez le menu **Project Interpreter**
 4. Sélectionnez **Conda**
 5. Validez la création du projet
 
 PyCharm va configurer le nouveau projet et analyser votre installation
-de Python, **ce qui peut prendre quelques minutes**. Au final fenêtre
-affichant le code du projet exemple devrait apparaitre:
+de Python, **ce qui peut prendre quelques minutes**. Au final, une fenêtre
+affichant le code du projet exemple apparaitra:
 
 ![capture d'écran montrant le programme d'installation de miniconda](/assets/img/session0/screen14.png)
 
@@ -105,37 +105,28 @@ Github permet de récupérer une archive de ce projet:
 [https://github.com/badock/FlaskSar2019ExampleApp/archive/session0.zip](https://github.com/badock/FlaskSar2019ExampleApp/archive/session0.zip)
 
 Nous vous demandons de:
-1. Télécharger l'archive ZIP via le lien précéder
+1. Télécharger l'archive ZIP via le lien précédent
 2. Extraire cette archive 
 ![extraction de l'archive zip](/assets/img/session0/screen_install_0.png)
 3. Sur la page d'accueil PyCharm, cliquer sur **ouvrir**
 ![extraction de l'archive zip](/assets/img/session0/screen_install_1.png)
-4. Selectionner le dossier où vous avez extrait l'archive ZIP et cliquez sur OK
+4. Sélectionner le dossier où vous avez extrait l'archive ZIP et cliquez sur OK
 ![extraction de l'archive zip](/assets/img/session0/screen_install_2.png)
 5. Attendre que PyCharm charge le projet:
 ![extraction de l'archive zip](/assets/img/session0/screen_install_3.png)
 6. Lancer le projet. **Si vous rencontrez une erreur, prévenez un des enseignants!**
 
-<!-- Vous allez créer un nouveau projet PyCharm se basant sur le code -->
-<!-- hébergé dans le dépot précédent: -->
-
-<!-- ![capture d'écran montrant comment récupérer le projet exemple sur Github](/assets/img/session0/screen15.png) -->
-
-<!-- ![capture d'écran montrant comment récupérer le projet exemple sur Github](/assets/img/session0/screen16.png) -->
-
-<!-- ![capture d'écran montrant comment installer les dépendances logicielles](/assets/img/session0/screen17.png) -->
-
 ## Configuration du projet avec le mode _Flask_ et le mode _deboggage_
 
 1. Cliquer sur **Ajouter une configuration**
 ![capture d'écran montrant comment configurer le mode flask et le mode debug](/assets/img/session0/flask_debug_0.png)
-2. Selectionner **Flask server**
+2. Sélectionner **Flask server**
 ![capture d'écran montrant comment configurer le mode flask et le mode debug](/assets/img/session0/flask_debug_1.png)
-3. Selectionner **Script path** et cliquer sur l'icone dossier
+3. Sélectionner **Script path** et cliquer sur l'icône "Dossier"
 4. Choisir le fichier **app.py** dans le dossier de votre projet Flask et cliquer sur **OK**
 ![capture d'écran montrant comment configurer le mode flask et le mode debug](/assets/img/session0/flask_debug_2.png)
 5. Cocher **FLASK_DEBUG** et cliquer sur **OK**
-6. Vérifier qu'un environnement d'execution est bien selectionné:
+6. Vérifier qu'un environnement d'exécution est bien sélectionné:
 ![capture d'écran montrant comment configurer le mode flask et le mode debug](/assets/img/session0/flask_debug_3.png)
 7. Lancer le projet et regarder si une erreur apparait. **Si une erreur apparait, contactez un des enseignants**
 ![capture d'écran montrant comment installer les dépendances logicielles](/assets/img/session0/screen18.png)

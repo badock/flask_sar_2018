@@ -21,7 +21,7 @@ administratifs:
 | `Fonctionnement`{: .label .label-blue} | | |
 | 1 | Un utilisateur prend contact à un guichet | Un utilisateur accède à une vue Flask via un navigateur web  |
 | 2 | L'agent administratif demande à l'utilisateur ce qu'il veut | Flask route la requête à la bonne fonction Python |
-| 3 | L'agent imprime un nouveau formulaire  correspondant à la demande         | Flask génère un formulaire HTML grâce à la template, et utilise l'état de avec l'objet héritant de `flask_wtf.Form` pour préremplir les champs |
+| 3 | L'agent imprime un nouveau formulaire  correspondant à la demande         | Flask génère un formulaire HTML grâce à la template, et utilise l'état de avec l'objet héritant de `flask_wtf.Form` pour préremplir les entrées |
 | 4 | L'agent donne le formulaire à l'utilisateur | Flask retourne le formulaire HMTL à l'utilisateur  |
 | 5 | **L'utilisateur remplit le formulaire** | **L’utilisateur remplit le formulaire** |
 | 6 | L'utilisateur donne le formulaire à l'agent | L'utilisateur clique sur le bouton `submit` |
@@ -32,21 +32,21 @@ administratifs:
 | 9 | Retour à l'étape 5 | Retour à l'étape 3 (en sauvegardant les informations entrées par l'utilisateur dans l'objet héritant `flask_wtf.Form`) | 
 
 De manière générale, pour implémenter correctement un formulaire avec
-Flask nous écrirons trois fonction Python:
+Flask nous écrirons trois fonctions Python:
 * une fonction `create_or_process_form` qui sera en charge de récupérer une requête HTTP et de faire appel à une des deux fonctions suivantes.
 * une fonction `display_form_post` qui affiche le formulaire:
   * vide lors du premier essai de remplissage
-  * préremplit lors des essais supplémentaires
+  * prérempli lors des essais supplémentaires
 * une fonction `do_something` qui
-  * traite les champs du formulaire préalablement validé
+  * traite les entrées du formulaire préalablement validé
   * redirige l'utilisateur une fois le traitement fait
 
 
-et un object `form` héritant de la classe `flask_wtf.Form`, qui va
-définir les champs du formulaires, leurs contraintes, et qui à terme
-contiendra les états persistants de ces champs (.i.e pour lors de
-plusieurs essais, les utilisateurs n'aient pas à resaisir les champs
-déjà saisis).
+et un objet `form` héritant de la classe `flask_wtf.Form`, qui va
+définir les entrées du formulaire, leurs contraintes, et qui à terme
+contiendra les états persistants de ces entrées (.i.e pour lors de
+plusieurs essais, les utilisateurs n'aient pas à resaisir les entrées
+déjà saisies).
 
 L'image ci-dessus résume le fonctionnement du formulaire avec la convention précédemment décrite:
 ![capture d'écran montrant l'architecture d'un formulaire](/assets/img/session2/schema.png)
@@ -60,10 +60,10 @@ formulaire ressemblera à cela:
 ![capture d'écran d'un formulaire pour calculer des expressions mathématiques](assets/img/session2/form_math_1.png)
 
 En validant le formulaire figurant dans l'image précédente,
-l'expression mathématique correspondant sera calculée, et le résultat
+l'expression mathématique correspondante sera calculée, et le résultat
 de son évaluation sera affiché comme suit:
 
-![capture d'écran du résultat de l'évaluation d'une expression mathématiques](assets/img/session2/form_math_2.png)
+![capture d'écran du résultat de l'évaluation d'une expression mathématique](assets/img/session2/form_math_2.png)
 
 
 ## Récupération du projet à compléter
@@ -78,7 +78,7 @@ Ce projet une application Flask basique qu'il faudra compléter.
 
 __Ce projet fournit un fichier `templates/forms.html.jinja2` contenant
 une macro (fonction) Jinja2 `render_field`, simplifiant l'affichage
-des champs d'un formulaire__, ce qui sera pratique pour les sessions
+des entrées d'un formulaire__, ce qui sera pratique pour les sessions
 suivantes:
 
 {% raw %}
@@ -100,7 +100,7 @@ suivantes:
 ```
 {% endraw %}
 
-Cette macro prend en entrée un attribut champ d'un objet formulaire
+Cette macro prend en entrée un objet "entrée" d'un formulaire
 héritant de `flask_wtf.Form`, et se charge d'afficher:
 * l'étiquette (label) du formulaire
 * le code HTML pour afficher le formulaire
@@ -120,7 +120,7 @@ from wtforms.validators import DataRequired, ValidationError
 
 # Creation d'une classe heritant de 'flask_wtf.Form'
 class AdditionForm(Form):
-    # Definition de trois champs, comme sur une des capture d'ecran precedentes
+    # Definition de trois entrees, comme sur une des capture d'ecran precedentes
     number_a = IntegerField('Number A', validators=[DataRequired()])
     number_b = IntegerField('Number B', validators=[DataRequired()])
     operator = StringField('Operator', validators=[DataRequired()])
@@ -128,9 +128,9 @@ class AdditionForm(Form):
 
 On peut noter les éléments suivants:
 * Pour chaque formulaire de notre application Flask, une classe héritant de `flask_wtf.Form` est définie.
-* À chaque champ d'un formulaire, un attribut (de type  `StringField`, `IntegerField`, ...) est défini.
-* Le premier attribut d'un champ correspond à son nom. Il sera aussi utilisé comme valeur d'étiquette par défaut.
-* On peut associer des "validators" à chaque champ.
+* À chaque entrée d'un formulaire, un attribut (de type  `StringField`, `IntegerField`, ...) est défini.
+* Le premier paramètre d'une entrée correspond à son nom. Il sera aussi utilisé comme valeur d'étiquette par défaut.
+* On peut associer des "validators" à chaque entrée.
 
 ## Ajout du formulaire dans Flask
 
@@ -159,8 +159,8 @@ Nous pouvons faire les observations suivantes:
   formulaire.
 - `form` possède une méthode de classe `validate_on_submit()`, qui
   indique si le formulaire est validable:
-   - l'utilisateur a rempli tous les champs
-   - les champs sont correctement remplis
+   - l'utilisateur a rempli toutes les entrées
+   - les entrées sont correctement remplies
 
 Les fonctions `traitement_formulaire_addition` et
 `afficher_formulaire_addition` seront introduites dans la suite de
@@ -204,7 +204,7 @@ manière suivante:
 
 Nous pouvons faire les observations suivantes:
 - La template récupère la macro Jinja2 `render_field` grâce à l'instruction {% raw %}`{% from "forms.html.jinja2" import render_field %}`{% endraw %}
-- Chaque champ du formulaire est rendu grâce à un appel du style {% raw %}`{{ render_field(form.<nom_du_champ>) }}`{% endraw %}
+- Chaque entrée du formulaire est affichée grâce à un appel du style {% raw %}`{{ render_field(form.<nom_entree>) }}`{% endraw %}
 - On indique où envoyer la template avec l'instruction {% raw %} `action="{{ url_for("fonction_formulaire_addition") }}"`{% endraw %}. 
 - La  fonction `url_for` prend en paramètre le nom et les arguments d'une fonction python, et retourne une URL qui cible cette fonction.
 
@@ -222,7 +222,7 @@ def traitement_formulaire_addition(form):
 ```
 
 On peut noter que:
-* les champs d'un formulaire deviennent des attributs de l'objet `form` et sont accessibles sous forme d'attribut `form.<nom-du-champ>`
+* les entrées d'un formulaire deviennent des attributs de l'objet `form` et sont accessibles sous forme d'attribut `form.<nom-de-l-entree>`
 
 ## (bonus) Sécurisation du formulaire
 
@@ -284,8 +284,7 @@ Nous pouvons faire les observations suivantes:
   permet de mettre en place plusieurs comportements:
     * lier le contexte de variable Python avec le formulaire affiché en HTML
     * vérification des valeurs entrées par l'utilisateur
-* La classe `PostEditForm` gère deux champs texte vérifiés à la soumission du formulaire : dans le cas présent, il
-  s'agit de vérifier que les valeurs envoyées ne sont pas vides.
+* La classe `PostEditForm` gère deux entrées de type "texte" vérifiées à la soumission du formulaire : dans le cas présent, il s'agit de vérifier que les valeurs envoyées ne sont pas vides.
 
 Dans la fonction `create_or_process_post`, nous allons maintenant
 créer un objet de type `PostEditForm` en lui passant:
@@ -328,8 +327,8 @@ def display_post_form(post, form):
 
 La template jinja2 `edit_post_form.html.jinja2` génère un formulaire,
 dont le résultat sera envoyé à la fonction `create_or_process_post` en
-utilsant la méthode `POST` du protocole HTTP. Les champs sont affichés
-en utilisant la macro (fonction Jinja) fournie dans le fichier
+utilsant la méthode `POST` du protocole HTTP. Les entrées sont affichées
+en utilisant la macro (fonction Jinja) `render_field` fournie dans le fichier
 `templates/forms.html.jinja2`:
 
 {% raw %}
@@ -350,9 +349,9 @@ en utilisant la macro (fonction Jinja) fournie dans le fichier
 ```
 {% endraw %}
 
-Lors de la validation du formulaire deux cas se présente: selon le résultat de l'expression `if form.validate_on_submit():`:
+Lors de la validation du formulaire, deux cas se présentent: selon le résultat de l'expression `if form.validate_on_submit():`:
 1. Les informations du formulaire sont incorrectes, il faut que l'utilisateur recommence. Dans ce cas la fonction `create_or_process_post` renvoie le formulaire grâce à la fonction `display_post_form`
-2. Les informations du formulaire sont correctes et la fonction `save_post_and_redirect_to_homepage` est appelée : les valeurs entrées dans les champs sont prises en compte en modifiant la base de données, et l'utilisateur est redirigé sur la vue de la méthode `index`
+2. Les informations du formulaire sont correctes et la fonction `save_post_and_redirect_to_homepage` est appelée : les valeurs entrées dans les entrées sont prises en compte en modifiant la base de données, et l'utilisateur est redirigé sur la vue de la méthode `index`
 
 Le bloc de code suivant montre comment `save_post_and_redirect_to_homepage` est codée:
 

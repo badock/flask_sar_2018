@@ -68,9 +68,9 @@ la barre supérieure est commune au site Facebook entier, tandis que le bandeau
 de page à gauche est commun à toutes les pages Facebook. Voici une représentation
 visuelle du template de page Facebook :
 
-![représentaion visuelle du template de page Facebook](/assets/img/session1/template.png)
+![représentation visuelle du template de page Facebook](/assets/img/session1/template.png)
 
-Les "trous" (indiqués sur l'image par des noms entre acolades pour le texte et des
+Les "trous" (indiqués sur l'image par des noms entre accolades pour le texte et des
 fonds verts pour les images) sont ensuite remplis en récupérant dans un premier temps les
 informations spécifiques à la page demandée dans une base de données, puis en instanciant
 le template avec les données récupérées. C'est l'instance obtenue qui est renvoyée au
