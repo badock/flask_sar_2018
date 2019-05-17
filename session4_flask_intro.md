@@ -108,7 +108,7 @@ def complex_view():
 ```
 
 En visitant l'URL
-[http://127.0.0.1:5000/complex_view_template](http://127.0.0.1:5000/complex_view_template),
+[http://127.0.0.1:5000/complex_view](http://127.0.0.1:5000/complex_view),
 vous obtiendez ce resultat: ![capture d'écran montrant le result du
 premier programme avec une vue
 complexe](/assets/img/session4/complex_view.png)
