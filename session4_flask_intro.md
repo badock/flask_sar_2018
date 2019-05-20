@@ -142,6 +142,7 @@ def complex_view_template():
     msg_if_boolean_value = "[boolean_value is true]"
     msg_if_not_boolean_value = "[boolean_value is false]"
 
+    # Bien penser a mettre 'import flask' en debut de fichier
     return flask.Response(flask.render_template("complex_view.jinja2",
                                  colors=colors,
                                  boolean_value=boolean_value,
@@ -154,7 +155,7 @@ def complex_view_template():
 
 {% raw %}
 ```jinja
-{% for color in colors_arg %}
+{% for color in colors %}
     {{ color }}
 {% endfor %}
 
@@ -255,7 +256,7 @@ __Nous allons maintenant coder une vue qui affichera la description d'un
 ingénieur en prenant en entrée son identifiant__. Pour cela, nous
 allons:
 
-* 1) créer un fichier `first_template.html` dans le dossier templates
+* 1) créer un fichier `show_engineer.html.jinja2` dans le dossier templates
    (en violet dans PyCharm)
 * 2) y mettre le contenu suivant:
 
@@ -292,6 +293,8 @@ allons:
 @app.route('/engineer/id/<int:engineer_id>')
 def show_engineer_by_id(engineer_id):
     engineer = get_engineer_by_id(engineer_id)
+
+    # Bien penser a mettre 'import flask' en debut de fichier
     return flask.render_template("show_engineer.html.jinja2",
                                  engineer=engineer)
 ```
