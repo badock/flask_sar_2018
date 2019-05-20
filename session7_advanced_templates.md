@@ -15,19 +15,60 @@ Ce projet contient 3 vues:
 - view_b
 - view_c
 
-qui affichent toutes une page web similaire, dont seule une partie
-du code HTML change. Dans le code fournit par l'archive, il y a
-beaucoup de duplication de code, chose qui contrevient au principe [`Do
-not repeat yourself`](https://fr.wikipedia.org/wiki/Ne_vous_r%C3%A9p%C3%A9tez_pas) recherché lors du développement de logiciels.
+qui affichent toutes une page web similaire, dont seule une partie du
+code HTML change. Dans le code fourni dans l'archive, il y a 
+duplications de code, ce qui contrevient au principe [`Do not
+repeat
+yourself`](https://fr.wikipedia.org/wiki/Ne_vous_r%C3%A9p%C3%A9tez_pas)
+recherché lors du développement de logiciels.
 
-Dans cette session, nous verrons comment utiliser des fonctions avancées du moteur de templates "Jinja2" pour limiter les répétitions de code
+Dans cette session, nous verrons comment utiliser des fonctions
+avancées du moteur de templates "Jinja2" pour limiter les répétitions
+de code.
 
 # Templates Jinja avancées
 
+Pour cet exemple, nous utiliserons du code CSS intégré directement
+dans la page entre deux balises `<style>`. Cette pratique est
+généralement découragée, mais simplifiera la compréhension dans ce
+cas.
 
 ## Héritage de templates
 
-Définir un nouveau fichier template `templates/layout.html.jinja2`, et y mettre le code suivant:
+### Introduction
+
+On peut avec Jinja définir des blocs à l'intérieur d'une template avec
+les instructions `block`:
+
+{% raw %}
+```jinja
+{% block nom_du_bloc %}
+ancienne valeur
+{% endblock %}
+```
+{% endraw %}
+
+On peut ensuite de définir une template "filles", héritant d'une template mère, et qui modifiera la valeur d'un des blocs de la template mère. Cela se fait en:
+1. déclarant une nouvelle template (la template fille)
+2. indiquant que la template fille étend la template mère avec l'instruction `extends`:
+{% raw %}
+```jinja
+{% extends "template_mere.jinja2" %}
+```
+{% endraw %}
+3. en redéfinissant le bloc dans la template fille:
+{% raw %}
+```jinja
+{% block nom_du_bloc %}
+nouvelle valeur
+{% endblock %}
+```
+{% endraw %}
+
+### Exercice
+
+Définir un nouveau fichier template `templates/layout.html.jinja2`, et
+y mettre le code suivant:
 
 {% raw %}
 ```jinja
@@ -36,6 +77,7 @@ Définir un nouveau fichier template `templates/layout.html.jinja2`, et y mettre
         <title>{{ title }}</title>
         <style>
             .active {
+                color: red;
                 font-weight: bold;
             }
         </style>
