@@ -19,9 +19,13 @@ serait masquée : il vous était demandé de manipuler les données (lire
 les données de la base de données) en utilisant des fonctions python
 qui s'occupaient d'interroger la base de données.
 
-Pour bien illustrer ces étapes, nous démarrerons cette session à
-partir d'une archive ZIP [tp_bdd.zip](https://github.com/badock/FlaskSar2019ExampleApp/archive/tp_bdd.zip) contenant un projet minimal, auquel
-nous allons ajouter une base de données.
+**Pour bien illustrer ces étapes, nous démarrerons cette session à
+partir d'une archive ZIP
+[tp_bdd_tasks_start.zip](https://github.com/badock/FlaskSar2019ExampleApp/archive/tp_bdd_tasks_start.zip)
+contenant un projet minimal, avec une base de données. Nous
+commenterons dans les sections suivantes le code de ce projet, puis
+nous ferons un exercice où nous complèterons le code afin d'avoir une
+application fonctionnelle.**
 
 # Mise en place d'une connexion avec une base de données
 
@@ -69,9 +73,9 @@ Ce que nous venons de faire, c'est de faire prendre conscience à Flask
 que la base de données existe, et nous avons demandé à Flask
 d'initialiser la base de données quand l'application est démarrée.
 
-Maintenant en lançant Flask, nous pouvons constater deux choses:
-- on ne sait pas où sont stockées les données
-- quelques avertissements apparaissent dans la console
+Si nous lancions Flask avec seulement ces lignes:
+- la base de données serait stockée à un endroit inconnu sur l'ordinateur
+- quelques messages d'avertissement apparaissent dans la console
 
 Pour résoudre ces deux points, ajouter les instructions suivantes dans
 le fichier `app.py`, juste après la définition de la variable `app`:
