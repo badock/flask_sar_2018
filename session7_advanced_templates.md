@@ -15,10 +15,13 @@ Ce projet contient 3 vues:
 - view_b
 - view_c
 
-qui affichent toutes une page web similaire, dont seule une partie du
-code HTML change. Dans le code fourni dans l'archive, il y a 
-duplications de code, ce qui contrevient au principe [`Do not
-repeat
+qui ont le même code et font appel à des templates dont le code est très similaire,
+et donc affichent toutes une page web similaire, dont seule une partie du
+code HTML change. Jetez un oeil à ces fonctions et à ces templates.
+
+
+Il y a clairement duplications de code, ce qui contrevient au principe
+[`Do not repeat
 yourself`](https://fr.wikipedia.org/wiki/Ne_vous_r%C3%A9p%C3%A9tez_pas)
 recherché lors du développement de logiciels.
 
@@ -50,14 +53,12 @@ ancienne valeur
 
 On peut ensuite de définir une template "filles", héritant d'une template mère, et qui modifiera la valeur d'un des blocs de la template mère. Cela se fait en:
 1. déclarant une nouvelle template (la template fille)
-2. indiquant que la template fille étend la template mère avec l'instruction `extends`:
-{% raw %}
+2. indiquant que la template fille étend la template mère avec l'instruction `extends`:{% raw %}
 ```jinja
 {% extends "template_mere.jinja2" %}
 ```
 {% endraw %}
-3. en redéfinissant le bloc dans la template fille:
-{% raw %}
+3. en redéfinissant le bloc dans la template fille: {% raw %}
 ```jinja
 {% block nom_du_bloc %}
 nouvelle valeur
@@ -75,6 +76,8 @@ y mettre le code suivant:
 <html>
     <head>
         <title>{{ title }}</title>
+        <!-- <style> est une balise qui permet d'inclure du code CSS dans une page web, 
+        sans définir un fichier externe de style CSS -->
         <style>
             .active {
                 color: red;
@@ -105,16 +108,22 @@ et modifier les templates:
 - templates/template_b.html.jinja2
 - templates/template_c.html.jinja2
 
-pour qu'elles étendent la template `layout.html.jinja2`:
+pour qu'elles étendent la template `layout.html.jinja2` et adapter le message affiché au fichier de template:
 {% raw %}
 ```jinja
 {% extends "layout.html.jinja2" %}
 
 {% block body %}
-    <p>Template a</p>
+    <p>Template A</p>
 {% endblock %}
 ```
 {% endraw %}
+
+Nous avons factorisé le code des templates. Cependant, l'affichage de
+la page active dans la barre du haut n'est pas bon : la template A est
+marquée sélectionnée, même si nous naviguons sur les pages des
+templates B et C. Nous verrons dans la section suivante comment gérer
+cet affichage avec des variables Jinja.
 
 ## Manipulation de variables
 
@@ -133,7 +142,7 @@ pour qu'elles aient la structure suivante:
 {% set active_page = "view_a" %}
 
 {% block body %}
-    <p>Template a</p>
+    <p>Template A</p>
 {% endblock %}
 ```
 {% endraw %}
@@ -146,7 +155,12 @@ qu'elle prenne en compte les précédentes variables:
 <html>
     <head>
         <title>{{ title }}</title>
-        <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}">
+        <style>
+            .active {
+                font-weight: bold;
+                color: red;
+            }
+        </style>
     </head>
     <body>
     <header>
@@ -242,7 +256,7 @@ print(fichier_css_url)
 Créer trois dossiers `css`, `js` et `img` dans le dossier `static`
 d'un projet Flask.
 
-Créer le fichier `static/css/static_resources_style.css` avec le code css suivant:
+Créer le fichier `static/css/style.css` avec le code css suivant:
 ```css
 .logo {
     width: 400px;
@@ -273,7 +287,7 @@ exercice, créez une template jinja
 <html>
     <head>
         <title>Static resources with Flask</title>
-        <link rel="stylesheet" href="{{ url_for("static", filename="css/static_resources_style.css") }}"/>
+        <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}"/>
     </head>
     <body>
         <img class="logo" src="{{ url_for("static", filename="img/logo.jpg") }}"/>
@@ -297,6 +311,15 @@ En allant sur le lien
 vous devriez obtenir le résultat suivant:
 
 ![/assets/img/session7/static_resources.png](/assets/img/session7/static_resources.png)
+
+En affichant le code source de la page, on peut constater que le texte
+sous le logo de l'IMT n'apparait pas dans le code HTML:
+![/assets/img/session7/static_resources_source.png](/assets/img/session7/static_resources_source.png)
+
+En effet, nous l'avons fait apparaitre en modifiant le
+[DOM](https://fr.wikipedia.org/wiki/Document_Object_Model) de la page
+Web avec Javascript. Nous verrons dans une session future comment
+faire des modifications avancées avec Javascript.
 
 # Correction
 
