@@ -19,13 +19,14 @@ serait masquée : il vous était demandé de manipuler les données (lire
 les données de la base de données) en utilisant des fonctions python
 qui s'occupaient d'interroger la base de données.
 
-**Pour bien illustrer ces étapes, nous démarrerons cette session à
+Pour bien illustrer ces étapes, nous démarrerons cette session à
 partir d'une archive ZIP
 [tp_bdd_tasks_start.zip](https://github.com/badock/FlaskSar2019ExampleApp/archive/tp_bdd_tasks_start.zip)
-contenant un projet minimal, avec une base de données. Nous
-commenterons dans les sections suivantes le code de ce projet, puis
-nous ferons un exercice où nous complèterons le code afin d'avoir une
-application fonctionnelle.**
+contenant un projet minimal, sans base de données. Dans les sections
+suivantes, nous ajouterons progressivement le support des bases de
+données. Enfin, nous ferons un exercice qui se basera sur le
+code écrit pendant la session. Il sera aussi possible de démarrer
+d'une archive ZIP. La correction se trouve en fin de ce document.
 
 # Mise en place d'une connexion avec une base de données
 
@@ -180,8 +181,8 @@ En SQL il est possible de définir des [clés
 qui permettent de définir des relations entre différentes tables.
 
 Il est possible de faire la même chose avec `SQLAlchemy`, en définissant des relations. Il existe principalement 2 types de relations:
-- `OneToMany`: les classes A et B sont liées, un élément de A peut avoir plusieurs B, mais un élément de A ne peut avoir au maximum qu'un B.
-- `ManyToMany`: les classes A et B sont liées, un élément de A peut avoir plusieurs B, et un élément de A peut avoir plusieurs B.
+- `OneToMany`: les classes A et B sont liées, un élément de A peut avoir plusieurs B, mais un élément de B ne peut avoir au maximum qu'un A.
+- `ManyToMany`: les classes A et B sont liées, un élément de A peut avoir plusieurs B, et un élément de B peut avoir plusieurs A.
 
 Traditionnellement, les relations "ManyToMany" étaient implémentées avec des tables d'association, comme il est montré dans ce lien de [la documentation de SQLAlchemy](https://docs.sqlalchemy.org/en/13/orm/basic_relationships.html#many-to-many). *Cependant, nous ferons le choix de représenter une relation "ManyToMany" entre une classe `A` et `B` avec une classe intermédiaire `C` et deux relations "OneToMany" `A->C` et `B->C`*.
 
@@ -209,7 +210,7 @@ class Task(db.Model):
 
 Nous allons maintenant effectuer un exercice, où vous développerez un
 gestionnaire de tâches. Vous partirez d'une archive ZIP
-[tp_bdd_tasks_start.zip](https://github.com/badock/FlaskSar2019ExampleApp/archive/tp_bdd_tasks_start.zip),
+[tp_bdd_tasks_exercice.zip](https://github.com/badock/FlaskSar2019ExampleApp/archive/tp_bdd_tasks_exercice.zip),
 qui contient une application web de base, et où vous devrez compléter
 des fonctions manipulant la base de données.
 
@@ -219,6 +220,18 @@ introduits précédemment. Nous fournissons deux fonctions:
 
 - `save_object_to_db(db_object)`: sauvegarde un objet dans la base de données.
 - `remove_object_from_db(db_object)`: supprime un objet de la base de données.
+
+**Si vous n'utilisez pas le code de l'archive `tp_bdd_tasks_exercice.zip`**, ajouter (ou remplacer) ces deux fonctions dans  `app.py`: 
+```python
+def save_object_to_db(db_object):
+    db.session.add(db_object)
+    db.session.commit()
+
+
+def remove_object_from_db(db_object):
+    db.session.delete(db_object)
+    db.session.commit()
+```
 
 
 Pour que l'application soit fonctionnelle, il faut coder les fonctions
