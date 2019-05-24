@@ -11,7 +11,7 @@ order: 8
 Dans cette session nous verrons comment manipuler une base de données
 relationnelle avec
 l'[ORM](https://fr.wikipedia.org/wiki/Mapping_objet-relationnel)
-SQLAlachemy.
+SQLAlchemy.
 
 Dans les sessions précédentes, certains exemples utilisaient déjà une
 base de données, cependant l'équipe enseignante avait décidé qu'elle
@@ -179,16 +179,24 @@ Plutôt que d'écrire des requêtes en langage SQL, SQLAlchemy propose de sélec
 En SQL il est possible de définir des [clés
 étrangères](https://fr.wikipedia.org/wiki/Cl%C3%A9_%C3%A9trang%C3%A8re)
 qui permettent de définir des relations entre différentes tables.
+Un exemple de relation serait : un cours est associé à une salle, un ou
+plusieurs professeurs (et plusieurs élèves). Le cours ferait alors référence
+à la salle, et la salle ferait référence à un ou plusieurs cours. De même,
+un cours ferait référence à un ou plusieurs professeurs, tandis qu'un
+professeur ferait référence à un ou plusieurs cours (de même pour les
+élèves).
 
 Il est possible de faire la même chose avec `SQLAlchemy`, en définissant des relations. Il existe principalement 2 types de relations:
-- `OneToMany`: les classes A et B sont liées, un élément de A peut avoir plusieurs B, mais un élément de B ne peut avoir au maximum qu'un A.
-- `ManyToMany`: les classes A et B sont liées, un élément de A peut avoir plusieurs B, et un élément de B peut avoir plusieurs A.
+- `OneToMany`: les classes A et B sont liées, un élément de A peut avoir plusieurs B, mais un élément de B ne peut avoir au maximum qu'un A. Dans l'exemple précédent, la relation "salle-cours" est de type OneToMany.
+- `ManyToMany`: les classes A et B sont liées, un élément de A peut avoir plusieurs B, et un élément de B peut avoir plusieurs A. Dans l'exemple précédent, les relations "professeur-cours" et "élève-cours" sont de type ManyToMany.
 
 Traditionnellement, les relations "ManyToMany" étaient implémentées avec des tables d'association, comme il est montré dans ce lien de [la documentation de SQLAlchemy](https://docs.sqlalchemy.org/en/13/orm/basic_relationships.html#many-to-many). *Cependant, nous ferons le choix de représenter une relation "ManyToMany" entre une classe `A` et `B` avec une classe intermédiaire `C` et deux relations "OneToMany" `A->C` et `B->C`*.
 
 Dans notre exemple de gestionnaire de tâches, nous allons introduire le concept de "liste de tâches". Il y aura plusieurs listes de tâches, au sein desquelles seront créées des tâches. Nous aurons les arités suivantes:
 - Une liste de tâches pourra avoir plusieurs tâches
 - Une tâche sera associée à une seule liste de tâches
+
+Cela correspond donc à une relation OneToMany.
 
 Le code suivant illustre le modèle de tâches:
 ```python
