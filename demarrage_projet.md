@@ -1,5 +1,5 @@
 ---
-title: Modele de données pour le projet
+title: Modèle de données pour le projet
 excerpt: ""
 order: 11
 ---
