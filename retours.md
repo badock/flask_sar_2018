@@ -12,6 +12,8 @@ Merci de répondre honnêtement (le formulaire est anonyme), et de manière la p
 
 # Ordre de passage
 
+**Soutenances en B218 !**
+
 Groupe 1 :
 Heure de passage 8h
 Eve Ben-Tolila + Kévin Lethuillier + Quentin Pubert

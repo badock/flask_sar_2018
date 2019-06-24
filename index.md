@@ -7,6 +7,8 @@ order: 0
 
 # Programmation d'une application web avec Flask
 
+**Soutenances en B218 !**
+
 ## Planning
 
 | Séance           | Contenu             |
